@@ -9,7 +9,7 @@ public class FSMOnEnter : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         foreach (var msg in onEnterMessages) {
-            animator.gameObject.SendMessage( msg );
+            animator.gameObject.SendMessageUpwards( msg );
         }
     }
 
