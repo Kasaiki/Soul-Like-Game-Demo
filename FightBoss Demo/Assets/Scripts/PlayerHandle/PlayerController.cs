@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void MoveCharacter( ) {
-        m_Animator.SetFloat( m_HashForwardSpeed , Mathf.Lerp( m_Animator.GetFloat( m_HashForwardSpeed ), ic.Dmag * ((ic.Run) ? 2.0f : 1.0f), 0.1f ) );
+        m_Animator.SetFloat( m_HashForwardSpeed , Mathf.Lerp( m_Animator.GetFloat( m_HashForwardSpeed ), ic.Dmag * ((ic.Run) ? 2.0f : 1.0f), 0.2f ) );
     }
 
     void SetDodge() {
