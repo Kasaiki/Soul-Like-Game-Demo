@@ -19,17 +19,14 @@ public class InputController : MonoBehaviour
 
     // 1. pressing signal
     public bool run;
-    // 2. trigger signal
     public bool dodge;
-    // 3. double trigger
-
+    public bool attack;
 
     [Header("==== Input Signals ====")]
     // Camera rotation
     public float Jup;
     public float Jright;
 
-    // Battle-mode movement input
     // Original Signals
     public float Dup;
     public float Dright;
@@ -37,7 +34,7 @@ public class InputController : MonoBehaviour
     public float Dup2;
     public float Dright2;
 
-    // Non-battle-mode movement input
+    // magnitude and direction
     public float Dmag;
     public Vector3 Dvec;
 
@@ -47,25 +44,12 @@ public class InputController : MonoBehaviour
     private float targetDright;
     private float velocityDup;
     private float velocityDright;
-    private Vector2 tempDAxis;
 
-    /// <summary>
-    /// normalize the input of x&y axis
-    /// </summary>
-    /// <param name="input"></param>
-    /// <returns></returns>
-    private Vector2 FixInput(Vector2 input) {
-        Vector2 output = Vector2.zero;
-
-        output.x = input.x * Mathf.Sqrt( 1 - (input.y * input.y / 2.0f) );
-        output.y = input.y * Mathf.Sqrt( 1 - (input.x * input.x / 2.0f) );
-        return output;
-    }
 
     // Update is called once per frame
     void Update()
     {
-        // control the camera by mouse
+        /* control the camera by mouse */
         if (mouseEnable) {
             Jup = -Input.GetAxis( "Mouse Y" ) * mouseSensitivityY;
             Jright = Input.GetAxis( "Mouse X" ) * mouseSensitivityX;
@@ -74,30 +58,61 @@ public class InputController : MonoBehaviour
         /* movement input signals */
         targetDup = Input.GetAxisRaw( "Vertical" );
         targetDright = Input.GetAxisRaw( "Horizontal" );
-
-        if(inputEnabled == false) {
+        if (inputEnabled == false) {
             targetDup = 0;
             targetDright = 0;
+        }
+
+        /* control the attack signal by coroutine */
+        if (Input.GetButtonDown( "Fire1" )) {
+            if (m_AttackWaitCoroutine != null)
+                StopCoroutine( m_AttackWaitCoroutine );
+
+            m_AttackWaitCoroutine = StartCoroutine( AttackWait( ) );
         }
 
         /* other input signals */
         run = Input.GetKey( keyA );
         dodge = Input.GetKeyDown( keyB );
 
-        // make movement signals varify smoothly
-        Dup = Mathf.SmoothDamp( Dup, targetDup, ref velocityDup, 0.1f );
-        Dright = Mathf.SmoothDamp( Dright, targetDright, ref velocityDright, 0.1f );
+        DampMovementInput( );
 
         /* normalize input */
-        tempDAxis = FixInput( new Vector2( Dright, Dup ) );
+        NormalizeMovementInput( new Vector2( Dright, Dup ) );
 
-        /* the normalized inputs */
-        Dup2 = tempDAxis.y; // vertical
-        Dright2 = tempDAxis.x; // horizontal
+        /* calculate magnitude and direction */
+        CalculateMovement( );
+    }
 
-        /* the Non-battle-mode animator input */
+
+    WaitForSeconds m_AttackInputWait;
+    Coroutine m_AttackWaitCoroutine;
+
+    const float k_AttackInputDuration = 0.03f;
+    private void Awake() {
+        m_AttackInputWait = new WaitForSeconds( k_AttackInputDuration );
+    }
+
+    IEnumerator AttackWait() {
+        attack = true;
+        yield return m_AttackInputWait;
+        attack = false;
+    }
+
+    private void DampMovementInput() {
+        Dup = Mathf.SmoothDamp( Dup, targetDup, ref velocityDup, 0.1f );
+        Dright = Mathf.SmoothDamp( Dright, targetDright, ref velocityDright, 0.1f );
+    }
+
+    private void NormalizeMovementInput(Vector2 input) {
+        Vector2 output = Vector2.zero;
+
+        Dright2 = input.x * Mathf.Sqrt( 1 - (input.y * input.y / 2.0f) );
+        Dup2 = input.y * Mathf.Sqrt( 1 - (input.x * input.x / 2.0f) );
+    }
+
+    private void CalculateMovement() {
         Dmag = Mathf.Sqrt( (Dup2 * Dup2) + (Dright2 * Dright2) ); // magnitude
         Dvec = Dright2 * this.transform.right + Dup2 * this.transform.forward; // direction
-
     }
 }

@@ -14,17 +14,4 @@ public class FSMMessageReceiver : MonoBehaviour
         anim = GetComponent<Animator>( );
     }
 
-    public void OnUpdateDodge() {
-        pc.rotationSpeed = pc.rotationSpeed /2;
-    }
-
-    public void OnExitDodge() {
-        pc.rotationSpeed = 0.1f;
-    }
-
-    /* Coroutine Area */
-    IEnumerable freezeRotationSpeed() {
-        yield return new WaitWhile( ()=>temp > 0 );
-    }
-
 }

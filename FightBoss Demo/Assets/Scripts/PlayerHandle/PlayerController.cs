@@ -6,10 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     /* Components */
     public InputController ic;
-    public Animator anim;
+    public Animator m_Animator;
     public GameObject model;
-
-    /* player states */
 
     /* Animator parameters */
     public bool canDash = true;
@@ -17,35 +15,81 @@ public class PlayerController : MonoBehaviour
 
     /* Player propoties */
     //private Transform lockTarget = null;
-    public float rotationSpeed = 0.1f;
+    public float rotationSpeed = 10f;
 
     /* Temp parameters */
     private Vector3 targetDirection;
 
+    /* Animator parameters Hash */
+    readonly int m_HashForwardSpeed = Animator.StringToHash( "ForwardSpeed" );
+    readonly int m_HashGrounded = Animator.StringToHash( "Grounded" );
+    readonly int m_HashAttack = Animator.StringToHash( "Attack" );
+    readonly int m_HashDodge = Animator.StringToHash( "Dodge" );
+    readonly int m_HashHurt = Animator.StringToHash( "Hurt" );
+    readonly int m_HashDeath = Animator.StringToHash( "Death" );
+    readonly int m_HashStateTime = Animator.StringToHash( "StateTime" );
+
+    /* Animator state info */
+    protected AnimatorStateInfo m_CurrentStateInfo;
+    protected AnimatorStateInfo m_NextStateInfo;
+    protected bool m_IsAnimatorTransitioning;
+    protected AnimatorStateInfo m_PreviousCurrentStateInfo;
+    protected AnimatorStateInfo m_PreviousNextStateInfo;
+    protected bool m_PreviousIsAnimatorTransitioning;
+
     void Start()
     {
         ic = GetComponent<InputController>( );
-        anim = GetComponentInChildren<Animator>( );
+        m_Animator = GetComponentInChildren<Animator>( );
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        /* dodge */
+        CacheAnimatorState( );
+
+        m_Animator.SetFloat( m_HashStateTime, Mathf.Repeat( m_Animator.GetCurrentAnimatorStateInfo( 0 ).normalizedTime, 1f ) );
+        m_Animator.ResetTrigger( m_HashAttack );
+
+        SetDodge( );
+        SetAttack( );
+
+        TurningCharacter( );
+        MoveCharacter( );
+
+    }
+
+    // smoothly rotate
+    void TurningCharacter( ) {
+        if (ic.Dmag > 0.2f) {
+            Quaternion targetDir = Quaternion.LookRotation( ic.Dvec, Vector3.up );
+            model.transform.rotation = Quaternion.Slerp( model.transform.rotation, targetDir, rotationSpeed * Time.fixedDeltaTime );
+            //model.transform.forward = Vector3.Slerp( model.transform.forward, ic.Dvec, rotationSpeed);
+        }
+    }
+
+    void MoveCharacter( ) {
+        m_Animator.SetFloat( m_HashForwardSpeed , Mathf.Lerp( m_Animator.GetFloat( m_HashForwardSpeed ), ic.Dmag * ((ic.run) ? 2.0f : 1.0f), 0.1f ) );
+    }
+
+    void SetDodge() {
         if (ic.dodge) {
-            anim.SetTrigger( "dodge" );
+            m_Animator.SetTrigger( m_HashDodge );
         }
+    }
 
-
-        /* Attack 
-        if (Input.GetMouseButtonDown( 0 )) {
-            anim.SetTrigger( "attack" );
-        }*/
-
-
-        /* smoothly rotate and move*/
-        if(ic.Dmag > 0.2f) {
-            model.transform.forward = Vector3.Slerp( model.transform.forward, ic.Dvec, rotationSpeed);
+    void SetAttack() {
+        if (ic.attack) {
+            m_Animator.SetTrigger( m_HashAttack );
         }
-        anim.SetFloat( "forward", Mathf.Lerp( anim.GetFloat( "forward" ), ic.Dmag * ((ic.run) ? 2.0f : 1.0f), 0.1f ) );
+    }
+
+    void CacheAnimatorState() {
+        m_PreviousCurrentStateInfo = m_CurrentStateInfo;
+        m_PreviousNextStateInfo = m_NextStateInfo;
+        m_PreviousIsAnimatorTransitioning = m_IsAnimatorTransitioning;
+
+        m_CurrentStateInfo = m_Animator.GetCurrentAnimatorStateInfo( 0 );
+        m_NextStateInfo = m_Animator.GetNextAnimatorStateInfo( 0 );
+        m_IsAnimatorTransitioning = m_Animator.IsInTransition( 0 );
     }
 }
