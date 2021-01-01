@@ -7,8 +7,8 @@ public class InputController : MonoBehaviour
     // Variables
     [Header( "==== Mouse Setting ====" )]
     public bool mouseEnable = true;
-    public float mouseSensitivityX = 10.0f;
-    public float mouseSensitivityY = 5.0f;
+    private float mouseSensitivityX = 12.0f;
+    private float mouseSensitivityY = 8.0f;
 
     // The inputment setting
     [Header("==== Key Setting ====")]
@@ -17,10 +17,10 @@ public class InputController : MonoBehaviour
     public KeyCode keyC;
     public KeyCode keyD;
 
-    // 1. pressing signal
-    public bool run;
-    public bool dodge;
-    public bool attack;
+    // pressing signal
+    private bool m_Run;
+    private bool m_Dodge;
+    private bool m_Attack;
 
     [Header("==== Input Signals ====")]
     // Camera rotation
@@ -28,8 +28,9 @@ public class InputController : MonoBehaviour
     public float Jright;
 
     // Original Signals
-    public float Dup;
-    public float Dright;
+    private float Dup;
+    private float Dright;
+
     // Fixed Signals
     public float Dup2;
     public float Dright2;
@@ -45,6 +46,17 @@ public class InputController : MonoBehaviour
     private float velocityDup;
     private float velocityDright;
 
+    public bool Run {
+        get { return m_Run && inputEnabled; }
+    }
+
+    public bool Dodge {
+        get { return m_Dodge && inputEnabled; }
+    }
+
+    public bool Attack {
+        get { return m_Attack && inputEnabled; }
+    }
 
     // Update is called once per frame
     void Update()
@@ -72,8 +84,8 @@ public class InputController : MonoBehaviour
         }
 
         /* other input signals */
-        run = Input.GetKey( keyA );
-        dodge = Input.GetKeyDown( keyB );
+        m_Run = Input.GetKey( keyA );
+        m_Dodge = Input.GetKeyDown( keyB );
 
         DampMovementInput( );
 
@@ -94,9 +106,9 @@ public class InputController : MonoBehaviour
     }
 
     IEnumerator AttackWait() {
-        attack = true;
+        m_Attack = true;
         yield return m_AttackInputWait;
-        attack = false;
+        m_Attack = false;
     }
 
     private void DampMovementInput() {

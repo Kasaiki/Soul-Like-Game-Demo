@@ -68,17 +68,17 @@ public class PlayerController : MonoBehaviour
     }
 
     void MoveCharacter( ) {
-        m_Animator.SetFloat( m_HashForwardSpeed , Mathf.Lerp( m_Animator.GetFloat( m_HashForwardSpeed ), ic.Dmag * ((ic.run) ? 2.0f : 1.0f), 0.1f ) );
+        m_Animator.SetFloat( m_HashForwardSpeed , Mathf.Lerp( m_Animator.GetFloat( m_HashForwardSpeed ), ic.Dmag * ((ic.Run) ? 2.0f : 1.0f), 0.1f ) );
     }
 
     void SetDodge() {
-        if (ic.dodge) {
+        if (ic.Dodge) {
             m_Animator.SetTrigger( m_HashDodge );
         }
     }
 
     void SetAttack() {
-        if (ic.attack) {
+        if (ic.Attack) {
             m_Animator.SetTrigger( m_HashAttack );
         }
     }
