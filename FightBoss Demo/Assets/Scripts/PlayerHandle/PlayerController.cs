@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     readonly int m_HashForwardSpeed = Animator.StringToHash( "ForwardSpeed" );
     readonly int m_HashGrounded = Animator.StringToHash( "Grounded" );
     readonly int m_HashAttack = Animator.StringToHash( "Attack" );
+    readonly int m_HashHeaveAttack = Animator.StringToHash( "HeaveAttack" );
     readonly int m_HashDodge = Animator.StringToHash( "Dodge" );
     readonly int m_HashHurt = Animator.StringToHash( "Hurt" );
     readonly int m_HashDeath = Animator.StringToHash( "Death" );
@@ -49,9 +50,13 @@ public class PlayerController : MonoBehaviour
 
         m_Animator.SetFloat( m_HashStateTime, Mathf.Repeat( m_Animator.GetCurrentAnimatorStateInfo( 0 ).normalizedTime, 1f ) );
         m_Animator.ResetTrigger( m_HashAttack );
+        m_Animator.ResetTrigger( m_HashDodge );
+        m_Animator.ResetTrigger( m_HashHeaveAttack );
 
-        SetDodge( );
         SetAttack( );
+        SetHeaveAttck( );
+        SetDodge( );
+
 
         TurningCharacter( );
         MoveCharacter( );
@@ -80,6 +85,12 @@ public class PlayerController : MonoBehaviour
     void SetAttack() {
         if (ic.Attack) {
             m_Animator.SetTrigger( m_HashAttack );
+        }
+    }
+
+    void SetHeaveAttck() {
+        if (ic.HeaveAttack) {
+            m_Animator.SetTrigger( m_HashHeaveAttack );
         }
     }
 

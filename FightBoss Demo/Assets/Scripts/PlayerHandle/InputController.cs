@@ -21,6 +21,7 @@ public class InputController : MonoBehaviour
     private bool m_Run;
     private bool m_Dodge;
     private bool m_Attack;
+    private bool m_HeaveAttack;
 
     [Header("==== Input Signals ====")]
     // Camera rotation
@@ -46,6 +47,23 @@ public class InputController : MonoBehaviour
     private float velocityDup;
     private float velocityDright;
 
+    // coroutine define
+    WaitForSeconds m_AttackInputWait;
+    WaitForSeconds m_HeaveAttackInputWait;
+    WaitForSeconds m_DodgeInputWait;
+    Coroutine m_AttackWaitCoroutine;
+    Coroutine m_HeaveAttackWaitCoroutine;
+    Coroutine m_DodgeWaitCoroutine;
+    const float k_AttackInputDuration = 0.03f;
+    const float k_HeaveAttackInputDuration = 0.03f;
+    const float k_DodgeInputDuration = 0.03f;
+
+    private void Awake() {
+        m_AttackInputWait = new WaitForSeconds( k_AttackInputDuration );
+        m_HeaveAttackInputWait = new WaitForSeconds( k_HeaveAttackInputDuration );
+        m_DodgeInputWait = new WaitForSeconds( k_DodgeInputDuration );
+    }
+
     public bool Run {
         get { return m_Run && inputEnabled; }
     }
@@ -56,6 +74,10 @@ public class InputController : MonoBehaviour
 
     public bool Attack {
         get { return m_Attack && inputEnabled; }
+    }
+
+    public bool HeaveAttack {
+        get { return m_HeaveAttack && inputEnabled; }
     }
 
     // Update is called once per frame
@@ -75,40 +97,52 @@ public class InputController : MonoBehaviour
             targetDright = 0;
         }
 
-        /* control the attack signal by coroutine */
-        if (Input.GetButtonDown( "Fire1" )) {
+        /* control the signal by coroutine */
+        if (Input.GetButtonDown( "Fire1" )) { // Attack
             if (m_AttackWaitCoroutine != null)
                 StopCoroutine( m_AttackWaitCoroutine );
-
             m_AttackWaitCoroutine = StartCoroutine( AttackWait( ) );
+        }
+
+        if (Input.GetButtonDown( "Fire2" )) { // HeaveAttack
+            if (m_AttackWaitCoroutine != null)
+                StopCoroutine( m_AttackWaitCoroutine );
+            m_AttackWaitCoroutine = StartCoroutine( HeaveAttackWait( ) );
+        }
+
+        if (Input.GetKeyDown( keyB )) { // Dodge
+            if (m_DodgeWaitCoroutine != null)
+                StopCoroutine( m_DodgeWaitCoroutine );
+            m_DodgeWaitCoroutine = StartCoroutine( DodgeWait( ) );
         }
 
         /* other input signals */
         m_Run = Input.GetKey( keyA );
-        m_Dodge = Input.GetKeyDown( keyB );
 
+        /* normalize movement input */
         DampMovementInput( );
-
-        /* normalize input */
         NormalizeMovementInput( new Vector2( Dright, Dup ) );
 
         /* calculate magnitude and direction */
         CalculateMovement( );
     }
 
-
-    WaitForSeconds m_AttackInputWait;
-    Coroutine m_AttackWaitCoroutine;
-
-    const float k_AttackInputDuration = 0.03f;
-    private void Awake() {
-        m_AttackInputWait = new WaitForSeconds( k_AttackInputDuration );
-    }
-
     IEnumerator AttackWait() {
         m_Attack = true;
         yield return m_AttackInputWait;
         m_Attack = false;
+    }
+
+    IEnumerator HeaveAttackWait() {
+        m_HeaveAttack = true;
+        yield return m_AttackInputWait;
+        m_HeaveAttack = false;
+    }
+
+    IEnumerator DodgeWait() {
+        m_Dodge = true;
+        yield return m_DodgeInputWait;
+        m_Dodge = false;
     }
 
     private void DampMovementInput() {
