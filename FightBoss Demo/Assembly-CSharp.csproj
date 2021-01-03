@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Camera\CameraPos\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyData.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMClearSignal.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMMessageReceiver.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMOnEnter.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Assets\Scripts\FSMScripts\FSMOnUpdate.cs" />
     <Compile Include="Assets\Scripts\Player\InputController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Player\RootMotionFix.cs" />
     <Compile Include="Assets\Scripts\System\InteractionManager.cs" />
     <Compile Include="Assets\Scripts\Weapon\WeaponController.cs" />

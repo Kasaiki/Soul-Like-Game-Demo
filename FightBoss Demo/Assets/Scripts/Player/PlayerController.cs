@@ -16,9 +16,8 @@ public class PlayerController : MonoBehaviour
     /* Player propoties */
     //private Transform lockTarget = null;
     public float rotationSpeed = 10f;
-
-    /* Temp parameters */
-    private Vector3 targetDirection;
+    //public float currentMagnitude;
+    //public Vector3 currentDirection;
 
     /* Animator parameters Hash */
     readonly int m_HashForwardSpeed = Animator.StringToHash( "ForwardSpeed" );
@@ -66,15 +65,15 @@ public class PlayerController : MonoBehaviour
 
     // smoothly rotate
     void TurningCharacter( ) {
-        if (ic.Dmag > 0.2f) {
-            Quaternion targetDir = Quaternion.LookRotation( ic.Dvec, Vector3.up );
+        if (ic.targetMagnitude > 0.2f) {
+            Quaternion targetDir = Quaternion.LookRotation( ic.targetDirection, Vector3.up );
             model.transform.rotation = Quaternion.Slerp( model.transform.rotation, targetDir, rotationSpeed * Time.fixedDeltaTime );
             //model.transform.forward = Vector3.Slerp( model.transform.forward, ic.Dvec, rotationSpeed);
         }
     }
 
     void MoveCharacter( ) {
-        m_Animator.SetFloat( m_HashForwardSpeed , Mathf.Lerp( m_Animator.GetFloat( m_HashForwardSpeed ), ic.Dmag * ((ic.Run) ? 2.0f : 1.0f), 0.2f ) );
+        m_Animator.SetFloat( m_HashForwardSpeed , Mathf.Lerp( m_Animator.GetFloat( m_HashForwardSpeed ), ic.targetMagnitude * ((ic.Run) ? 2.0f : 1.0f), 0.2f ) );
     }
 
     void SetDodge() {

@@ -25,20 +25,20 @@ public class InputController : MonoBehaviour
 
     [Header("==== Input Signals ====")]
     // Camera rotation
-    public float Jup;
-    public float Jright;
+    public float cameraVerticalSignal;
+    public float cameraHorizontalSignal;
 
     // Original Signals
-    private float Dup;
-    private float Dright;
+    private float moveVerticalSignal;
+    private float moveHorizontalSignal;
 
     // Fixed Signals
-    public float Dup2;
-    public float Dright2;
+    public float fixedMoveVerticalSignal;
+    public float fixedMoveHorizontalSignal;
 
     // magnitude and direction
-    public float Dmag;
-    public Vector3 Dvec;
+    public float targetMagnitude;
+    public Vector3 targetDirection;
 
     [Header( "==== Ohters ====" )]
     public bool inputEnabled = true;
@@ -78,7 +78,6 @@ public class InputController : MonoBehaviour
         get { return m_Run && !m_Dodge && inputEnabled; }
     }
 
-
     public bool Attack {
         get { return m_Attack && !m_Dodge && inputEnabled; }
     }
@@ -92,8 +91,8 @@ public class InputController : MonoBehaviour
     {
         /* control the camera by mouse */
         if (mouseEnable) {
-            Jup = -Input.GetAxis( "Mouse Y" ) * mouseSensitivityY;
-            Jright = Input.GetAxis( "Mouse X" ) * mouseSensitivityX;
+            cameraVerticalSignal = -Input.GetAxis( "Mouse Y" ) * mouseSensitivityY;
+            cameraHorizontalSignal = Input.GetAxis( "Mouse X" ) * mouseSensitivityX;
         }
 
         /* movement input signals */
@@ -128,7 +127,7 @@ public class InputController : MonoBehaviour
 
         /* normalize movement input */
         DampMovementInput( );
-        NormalizeMovementInput( new Vector2( Dright, Dup ) );
+        NormalizeMovementInput( new Vector2( moveHorizontalSignal, moveVerticalSignal ) );
 
         /* calculate magnitude and direction */
         CalculateMovement( );
@@ -153,19 +152,19 @@ public class InputController : MonoBehaviour
     }
 
     private void DampMovementInput() {
-        Dup = Mathf.SmoothDamp( Dup, targetDup, ref velocityDup, 0.1f );
-        Dright = Mathf.SmoothDamp( Dright, targetDright, ref velocityDright, 0.1f );
+        moveVerticalSignal = Mathf.SmoothDamp( moveVerticalSignal, targetDup, ref velocityDup, 0.1f );
+        moveHorizontalSignal = Mathf.SmoothDamp( moveHorizontalSignal, targetDright, ref velocityDright, 0.1f );
     }
 
     private void NormalizeMovementInput(Vector2 input) {
         Vector2 output = Vector2.zero;
 
-        Dright2 = input.x * Mathf.Sqrt( 1 - (input.y * input.y / 2.0f) );
-        Dup2 = input.y * Mathf.Sqrt( 1 - (input.x * input.x / 2.0f) );
+        fixedMoveHorizontalSignal = input.x * Mathf.Sqrt( 1 - (input.y * input.y / 2.0f) );
+        fixedMoveVerticalSignal = input.y * Mathf.Sqrt( 1 - (input.x * input.x / 2.0f) );
     }
 
     private void CalculateMovement() {
-        Dmag = Mathf.Sqrt( (Dup2 * Dup2) + (Dright2 * Dright2) ); // magnitude
-        Dvec = Dright2 * this.transform.right + Dup2 * this.transform.forward; // direction
+        targetMagnitude = Mathf.Sqrt( (fixedMoveVerticalSignal * fixedMoveVerticalSignal) + (fixedMoveHorizontalSignal * fixedMoveHorizontalSignal) ); // magnitude
+        targetDirection = fixedMoveHorizontalSignal * this.transform.right + fixedMoveVerticalSignal * this.transform.forward; // direction
     }
 }

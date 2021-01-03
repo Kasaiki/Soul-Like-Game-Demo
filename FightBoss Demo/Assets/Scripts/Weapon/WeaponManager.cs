@@ -6,7 +6,6 @@ public class WeaponManager : MonoBehaviour
 {
     public float ATK;
 
-    [SerializeField]
     private BoxCollider[] weaponColliders;
 
     private bool weaponEnable = false;
