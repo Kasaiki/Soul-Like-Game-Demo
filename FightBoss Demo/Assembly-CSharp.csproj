@@ -64,7 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Camer\CameraPos\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraPos\CameraController.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMClearSignal.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMMessageReceiver.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMOnEnter.cs" />
