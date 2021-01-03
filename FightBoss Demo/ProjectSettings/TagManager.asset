@@ -13,12 +13,12 @@ TagManager:
   - UI
   - 
   - 
+  - Player
+  - Enemy
+  - PlayerWeapon
+  - EnemyWeapon
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
   - 
   - 
   - 
