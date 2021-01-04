@@ -4,55 +4,68 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private GameObject playerHandle; // control the horizontal rotation
-    private GameObject cameraHandle; // control the vertical rotation
+    private Transform player;
     private Transform cameraMain;
     private InputController ic;
-    private Animator playerAnim;
+    private LockOnTargetDetector detector;
+    public GameObject target = null;
 
     /* paramaters */
-    private float maxDistance = 0.1f;
-    private Vector3 smoothPosition;
+    private float distance;
+    private float maxDistance = 3f;
+    private float dampRate;
+    private float cameraHeight = 1.7f;
+    private Vector3 cameraOffset = new Vector3( 0, 0, 4f );
+    private Vector3 cameraTargetDir;
+
     private Vector3 cameraDampVelocity;
-    private float tempEulerX;
 
 
     private void Start() {
-        cameraHandle = transform.parent.gameObject;
-        playerHandle = cameraHandle.transform.parent.gameObject;
-        tempEulerX = 20;
-        ic = playerHandle.GetComponent<InputController>( );
-        playerAnim = playerHandle.GetComponentInChildren<Animator>( );
+        player = GameObject.FindGameObjectWithTag( "Player" ).GetComponent<Transform>( );
+        ic = GameObject.FindGameObjectWithTag( "Player" ).GetComponent<InputController>( );
         cameraMain = Camera.main.transform;
+        cameraTargetDir = cameraMain.eulerAngles;
     }
 
     // Update is called once per frame
     void FixedUpdate() {
-        // lock the avator's rotation(1/2)
-        Vector3 tempAnimEuler = playerAnim.transform.eulerAngles;
+        if( target == null) {
+            /* Unlockon Mode */
+            // calculate target vertical and horizontal rotation
+            cameraTargetDir.x = Mathf.Clamp( Mathf.Lerp( cameraTargetDir.x, cameraTargetDir.x + ic.cameraVerticalSignal, 0.2f ), -50, 30 );
+            cameraTargetDir.y = Mathf.Lerp( cameraTargetDir.y, cameraTargetDir.y + ic.cameraHorizontalSignal, 0.2f );
+            transform.rotation = Quaternion.Euler( cameraTargetDir );
 
-        // horizontal camera rotation
-        playerHandle.transform.Rotate( Vector3.up, ic.cameraHorizontalSignal * 20f * Time.fixedDeltaTime );
-        // vertical camera rotation
-        tempEulerX += ic.cameraVerticalSignal * 10f * Time.fixedDeltaTime;
-        tempEulerX = Mathf.Clamp( tempEulerX, -50, 30 );
-        cameraHandle.transform.localEulerAngles = new Vector3( tempEulerX, 0, 0 );
+            // update the camera rotation
+            cameraMain.rotation = transform.rotation;
+        } else {
 
-        // lock the avator's rotation(2/2)
-        playerAnim.transform.eulerAngles = tempAnimEuler;
+            /* Lockon Mode */
+            cameraTargetDir = target.transform.position - player.position;
+            transform.forward = cameraTargetDir;
+
+            // update the camera rotation
+            cameraMain.LookAt( target.transform.position );
+        }
+        ResetRotationSignal( );
+
+
+        // calculate offset
+        transform.position = player.position - transform.rotation * cameraOffset + Vector3.up * cameraHeight;
 
         // update the camera position smoothly
-        if (CheckMargin( )) {
-            //cameraMain.position = transform.position;
-            cameraMain.transform.position = Vector3.SmoothDamp( cameraMain.transform.position, transform.position, ref cameraDampVelocity, 0.35f );
-        }
-        cameraMain.eulerAngles = transform.eulerAngles;
-
-
+        UpdateCameraPos( );
     }
 
-    bool CheckMargin() {
-        // check the distance between camera and target
-        return Vector3.Distance( cameraMain.position, this.transform.position ) > maxDistance;
+    void UpdateCameraPos() {
+        distance = Vector3.Distance( cameraMain.position, this.transform.position );
+        dampRate = 1 - Mathf.Min(  distance / maxDistance, 0.8f);
+        cameraMain.transform.position = Vector3.SmoothDamp( cameraMain.transform.position, transform.position, ref cameraDampVelocity, dampRate * 0.5f );
+    }
+
+    private void ResetRotationSignal() {
+        ic.cameraHorizontalSignal = 0;
+        ic.cameraVerticalSignal = 0;
     }
 }

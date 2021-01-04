@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\LockOnTargetDetector.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraPos\CameraController.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyData.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMClearSignal.cs" />

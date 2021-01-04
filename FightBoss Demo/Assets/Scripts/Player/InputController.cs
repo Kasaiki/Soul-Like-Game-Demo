@@ -7,8 +7,8 @@ public class InputController : MonoBehaviour
     // Variables
     [Header( "==== Mouse Setting ====" )]
     public bool mouseEnable = true;
-    private float mouseSensitivityX = 12.0f;
-    private float mouseSensitivityY = 8.0f;
+    private float mouseSensitivityX = 8.0f;
+    private float mouseSensitivityY = 6.0f;
 
     // The inputment setting
     [Header("==== Key Setting ====")]
@@ -68,6 +68,8 @@ public class InputController : MonoBehaviour
     private void Start() {
         //Cursor.visible = false;
         //Cursor.lockState = CursorLockMode.Locked;
+        cameraVerticalSignal = 0;
+        cameraHorizontalSignal = 0;
     }
 
     public bool Dodge {
@@ -89,18 +91,19 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /* control the camera by mouse */
-        if (mouseEnable) {
-            cameraVerticalSignal = -Input.GetAxis( "Mouse Y" ) * mouseSensitivityY;
-            cameraHorizontalSignal = Input.GetAxis( "Mouse X" ) * mouseSensitivityX;
-        }
-
         /* movement input signals */
         targetDup = Input.GetAxisRaw( "Vertical" );
         targetDright = Input.GetAxisRaw( "Horizontal" );
         if (inputEnabled == false) {
             targetDup = 0;
             targetDright = 0;
+        }
+
+        /* control the camera by mouse */
+        if (mouseEnable) {
+            cameraVerticalSignal += -Input.GetAxis( "Mouse Y" ) * mouseSensitivityY;
+            cameraHorizontalSignal += Input.GetAxis( "Mouse X" ) * mouseSensitivityX + fixedMoveHorizontalSignal * targetMagnitude * 0.4f;
+            print( fixedMoveHorizontalSignal );
         }
 
         /* control the signal by coroutine */
@@ -165,6 +168,8 @@ public class InputController : MonoBehaviour
 
     private void CalculateMovement() {
         targetMagnitude = Mathf.Sqrt( (fixedMoveVerticalSignal * fixedMoveVerticalSignal) + (fixedMoveHorizontalSignal * fixedMoveHorizontalSignal) ); // magnitude
-        targetDirection = fixedMoveHorizontalSignal * this.transform.right + fixedMoveVerticalSignal * this.transform.forward; // direction
+        targetDirection = fixedMoveHorizontalSignal * Camera.main.transform.right + fixedMoveVerticalSignal * Camera.main.transform.forward;
+        targetDirection.y = 0;
+        targetDirection.Normalize( );
     }
 }
