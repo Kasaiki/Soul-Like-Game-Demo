@@ -10,20 +10,14 @@ public class InputController : MonoBehaviour
     private float mouseSensitivityX = 8.0f;
     private float mouseSensitivityY = 6.0f;
 
-    // The inputment setting
-    [Header("==== Key Setting ====")]
-    private KeyCode keyA = KeyCode.LeftShift;
-    private KeyCode keyB = KeyCode.Space;
-    public KeyCode keyC;
-    public KeyCode keyD;
-
-    // pressing signal
-    private bool m_Run;
-    private bool m_Dodge;
+    // Key signals
+    private bool m_Dash;
     private bool m_Attack;
     private bool m_HeaveAttack;
+    private bool m_isMove;
+    private bool m_isRun;
 
-    [Header("==== Input Signals ====")]
+    [Header( "==== Input Signals ====" )]
     // Camera rotation
     public float cameraVerticalSignal;
     public float cameraHorizontalSignal;
@@ -41,51 +35,56 @@ public class InputController : MonoBehaviour
     public Vector3 targetDirection;
 
     [Header( "==== Ohters ====" )]
-    public bool inputEnabled = true;
     private float targetDup;
     private float targetDright;
     private float velocityDup;
     private float velocityDright;
 
+    public bool inputEnabled;
+    public bool cameraLockOn;
+
     // coroutine define
     WaitForSeconds m_AttackInputWait;
     WaitForSeconds m_HeaveAttackInputWait;
-    WaitForSeconds m_DodgeInputWait;
+    WaitForSeconds m_DashInputWait;
     Coroutine m_AttackWaitCoroutine;
     Coroutine m_HeaveAttackWaitCoroutine;
-    Coroutine m_DodgeWaitCoroutine;
-    const float k_AttackInputDuration = 0.03f;
-    const float k_HeaveAttackInputDuration = 0.03f;
-    const float k_DodgeInputDuration = 0.03f;
+    Coroutine m_DashWaitCoroutine;
+    const float k_InputWait = 0.08f;
 
     private void Awake() {
-        m_AttackInputWait = new WaitForSeconds( k_AttackInputDuration );
-        m_HeaveAttackInputWait = new WaitForSeconds( k_HeaveAttackInputDuration );
-        m_DodgeInputWait = new WaitForSeconds( k_DodgeInputDuration );
-        
+        m_AttackInputWait = new WaitForSeconds( k_InputWait );
+        m_HeaveAttackInputWait = new WaitForSeconds( k_InputWait );
+        m_DashInputWait = new WaitForSeconds( k_InputWait );
     }
 
     private void Start() {
         //Cursor.visible = false;
         //Cursor.lockState = CursorLockMode.Locked;
+        inputEnabled = true;
+        cameraLockOn = false;
         cameraVerticalSignal = 0;
         cameraHorizontalSignal = 0;
     }
 
-    public bool Dodge {
-        get { return m_Dodge && inputEnabled; }
-    }
-
-    public bool Run {
-        get { return m_Run && !m_Dodge && inputEnabled; }
+    public bool Dash {
+        get { return m_Dash && inputEnabled; }
     }
 
     public bool Attack {
-        get { return m_Attack && !m_Dodge && inputEnabled; }
+        get { return m_Attack && inputEnabled; }
     }
 
     public bool HeaveAttack {
-        get { return m_HeaveAttack && !m_Dodge && inputEnabled; }
+        get { return m_HeaveAttack  && inputEnabled; }
+    }
+
+    public bool IsMove {
+        get { return m_isMove && inputEnabled ; }
+    }
+
+    public bool IsRun {
+        get { return m_isRun && m_isMove && inputEnabled; }
     }
 
     // Update is called once per frame
@@ -98,35 +97,45 @@ public class InputController : MonoBehaviour
             targetDup = 0;
             targetDright = 0;
         }
+        m_isMove = Mathf.Abs( targetDup ) + Mathf.Abs( targetDright ) > 0 ? true : false;
 
-        /* control the camera by mouse */
+        /* camera control signals */
         if (mouseEnable) {
             cameraVerticalSignal += -Input.GetAxis( "Mouse Y" ) * mouseSensitivityY;
             cameraHorizontalSignal += Input.GetAxis( "Mouse X" ) * mouseSensitivityX + fixedMoveHorizontalSignal * targetMagnitude * 0.4f;
-            print( fixedMoveHorizontalSignal );
+            //print( fixedMoveHorizontalSignal );
         }
 
         /* control the signal by coroutine */
-        if (Input.GetKeyDown( keyB )) { // Dodge
-            if (m_DodgeWaitCoroutine != null)
-                StopCoroutine( m_DodgeWaitCoroutine );
-            m_DodgeWaitCoroutine = StartCoroutine( DodgeWait( ) );
-        }
-
         if (Input.GetButtonDown( "Fire1" )) { // Attack
             if (m_AttackWaitCoroutine != null)
                 StopCoroutine( m_AttackWaitCoroutine );
-            m_AttackWaitCoroutine = StartCoroutine( AttackWait( ) );
+            m_AttackWaitCoroutine = StartCoroutine( AttackWait(  ) );
         }
 
         if (Input.GetButtonDown( "Fire2" )) { // HeaveAttack
-            if (m_AttackWaitCoroutine != null)
-                StopCoroutine( m_AttackWaitCoroutine );
-            m_AttackWaitCoroutine = StartCoroutine( HeaveAttackWait( ) );
+            if ( m_HeaveAttackWaitCoroutine!= null)
+                StopCoroutine( m_HeaveAttackWaitCoroutine );
+            m_HeaveAttackWaitCoroutine = StartCoroutine( HeaveAttackWait(  ) );
+        }
+
+        if (Input.GetKeyDown( KeyCode.LeftShift )) { // HeaveAttack
+            if (m_HeaveAttackWaitCoroutine != null)
+                StopCoroutine( m_HeaveAttackWaitCoroutine );
+            m_HeaveAttackWaitCoroutine = StartCoroutine( DashWait( ) );
         }
 
         /* other input signals */
-        m_Run = Input.GetKey( keyA );
+        if (Input.GetKey( KeyCode.LeftShift )) {
+            m_isRun = true;
+        } else {
+            m_isRun = false;
+        }
+
+        if(Input.GetKeyDown( KeyCode.LeftControl )) {
+            cameraLockOn = !cameraLockOn;
+            print( " lock mode is :" + cameraLockOn );
+        }
 
         /* normalize movement input */
         DampMovementInput( );
@@ -144,14 +153,14 @@ public class InputController : MonoBehaviour
 
     IEnumerator HeaveAttackWait() {
         m_HeaveAttack = true;
-        yield return m_AttackInputWait;
+        yield return m_HeaveAttackInputWait;
         m_HeaveAttack = false;
     }
 
-    IEnumerator DodgeWait() {
-        m_Dodge = true;
-        yield return m_DodgeInputWait;
-        m_Dodge = false;
+    IEnumerator DashWait() {
+        m_Dash = true;
+        yield return m_DashInputWait;
+        m_Dash = false;
     }
 
     private void DampMovementInput() {
@@ -167,7 +176,7 @@ public class InputController : MonoBehaviour
     }
 
     private void CalculateMovement() {
-        targetMagnitude = Mathf.Sqrt( (fixedMoveVerticalSignal * fixedMoveVerticalSignal) + (fixedMoveHorizontalSignal * fixedMoveHorizontalSignal) ); // magnitude
+        //targetMagnitude = Mathf.Sqrt( (fixedMoveVerticalSignal * fixedMoveVerticalSignal) + (fixedMoveHorizontalSignal * fixedMoveHorizontalSignal) );
         targetDirection = fixedMoveHorizontalSignal * Camera.main.transform.right + fixedMoveVerticalSignal * Camera.main.transform.forward;
         targetDirection.y = 0;
         targetDirection.Normalize( );

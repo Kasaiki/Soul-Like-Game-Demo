@@ -4,42 +4,43 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    /* Components */
+    // Components
     public InputController ic;
     public Animator m_Animator;
+    public Rigidbody rig;
     public GameObject model;
 
-    /* Animator parameters */
+    // Animator parameters
     public bool canDash = true;
     public bool canAttack = true;
 
-    /* Player propoties */
-    //private Transform lockTarget = null;
-    public float rotationSpeed = 10f;
-    //public float currentMagnitude;
-    //public Vector3 currentDirection;
+    // Player propoties
+    public float rotationSpeed = 12f;
 
-    /* Animator parameters Hash */
+    // Animator parameters Hash 
     readonly int m_HashForwardSpeed = Animator.StringToHash( "ForwardSpeed" );
     readonly int m_HashGrounded = Animator.StringToHash( "Grounded" );
     readonly int m_HashAttack = Animator.StringToHash( "Attack" );
     readonly int m_HashHeaveAttack = Animator.StringToHash( "HeaveAttack" );
-    readonly int m_HashDodge = Animator.StringToHash( "Dodge" );
     readonly int m_HashHurt = Animator.StringToHash( "Hurt" );
     readonly int m_HashDeath = Animator.StringToHash( "Death" );
+    readonly int m_HashIsMove = Animator.StringToHash( "IsMove" );
+    readonly int m_HashDash = Animator.StringToHash( "Dash" );
     readonly int m_HashStateTime = Animator.StringToHash( "StateTime" );
+
+    readonly int m_Curve_DashVelocity = Animator.StringToHash( "DashVelocity" );
+
+    /* Animator State Name Hash */
+    readonly int m_State_Move = Animator.StringToHash( "Move" );
 
     /* Animator state info */
     protected AnimatorStateInfo m_CurrentStateInfo;
-    protected AnimatorStateInfo m_NextStateInfo;
-    protected bool m_IsAnimatorTransitioning;
-    protected AnimatorStateInfo m_PreviousCurrentStateInfo;
-    protected AnimatorStateInfo m_PreviousNextStateInfo;
-    protected bool m_PreviousIsAnimatorTransitioning;
+    protected float m_AngleDifferent;
 
     void Start()
     {
         ic = GetComponent<InputController>( );
+        rig = GetComponentInParent<Rigidbody>( );
         m_Animator = GetComponentInChildren<Animator>( );
 
     }
@@ -47,16 +48,16 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         CacheAnimatorState( );
+        ChangeRotationSpeed( );
 
         m_Animator.SetFloat( m_HashStateTime, Mathf.Repeat( m_Animator.GetCurrentAnimatorStateInfo( 0 ).normalizedTime, 1f ) );
         m_Animator.ResetTrigger( m_HashAttack );
-        m_Animator.ResetTrigger( m_HashDodge );
+        m_Animator.ResetTrigger( m_HashDash );
         m_Animator.ResetTrigger( m_HashHeaveAttack );
 
+        SetDash( );
         SetAttack( );
         SetHeaveAttck( );
-        SetDodge( );
-
 
         TurningCharacter( );
         MoveCharacter( );
@@ -65,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
     // smoothly rotate
     void TurningCharacter( ) {
-        if (ic.targetMagnitude > 0.2f) {
+        if (ic.IsMove) {
             Quaternion targetDir = Quaternion.LookRotation( ic.targetDirection, Vector3.up );
             model.transform.rotation = Quaternion.Slerp( model.transform.rotation, targetDir, rotationSpeed * Time.fixedDeltaTime );
             //model.transform.forward = Vector3.Slerp( model.transform.forward, ic.Dvec, rotationSpeed);
@@ -73,12 +74,32 @@ public class PlayerController : MonoBehaviour
     }
 
     void MoveCharacter( ) {
-        m_Animator.SetFloat( m_HashForwardSpeed , Mathf.Lerp( m_Animator.GetFloat( m_HashForwardSpeed ), ic.targetMagnitude * ((ic.Run) ? 2.0f : 1.0f), 0.2f ) );
+        float currForwardSpeed = m_Animator.GetFloat( m_HashForwardSpeed );
+        if ( ic.IsRun ) {
+            m_Animator.SetFloat( m_HashForwardSpeed, Mathf.Lerp( currForwardSpeed, 1f, 0.4f ) );
+        } else {
+            m_Animator.SetFloat( m_HashForwardSpeed, Mathf.Lerp( currForwardSpeed, 0f, 10f * Time.fixedDeltaTime ) );
+        }
+        m_Animator.SetBool( m_HashIsMove, ic.IsMove );
+
+        if (m_CurrentStateInfo.IsName( "Dash" )) {
+            float velocity = m_Animator.GetFloat( m_Curve_DashVelocity );
+            rig.transform.position +=  velocity * m_Animator.transform.forward;
+        }
     }
 
-    void SetDodge() {
-        if (ic.Dodge) {
-            m_Animator.SetTrigger( m_HashDodge );
+    void ChangeRotationSpeed() {
+        print( rotationSpeed );
+        if(m_CurrentStateInfo.IsTag( "Attacking" )) {
+            rotationSpeed = 2f;
+        } else {
+            rotationSpeed = 12f;
+        }
+    }
+
+    void SetDash() {
+        if (ic.Dash) {
+            m_Animator.SetTrigger( m_HashDash );
         }
     }
 
@@ -95,12 +116,6 @@ public class PlayerController : MonoBehaviour
     }
 
     void CacheAnimatorState() {
-        m_PreviousCurrentStateInfo = m_CurrentStateInfo;
-        m_PreviousNextStateInfo = m_NextStateInfo;
-        m_PreviousIsAnimatorTransitioning = m_IsAnimatorTransitioning;
-
         m_CurrentStateInfo = m_Animator.GetCurrentAnimatorStateInfo( 0 );
-        m_NextStateInfo = m_Animator.GetNextAnimatorStateInfo( 0 );
-        m_IsAnimatorTransitioning = m_Animator.IsInTransition( 0 );
     }
 }

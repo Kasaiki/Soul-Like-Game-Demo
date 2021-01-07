@@ -530,7 +530,7 @@ ModelImporter:
       name: Twinblades_Strafe_Run_F_End_Root
       takeName: Twinblades_Strafe_Run_F_End_Root
       internalID: 0
-      firstFrame: 480
+      firstFrame: 485
       lastFrame: 540
       wrapMode: 0
       orientationOffsetY: 0

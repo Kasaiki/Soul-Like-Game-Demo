@@ -64,9 +64,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\LockOnTargetDetector.cs" />
-    <Compile Include="Assets\Scripts\Camera\CameraPos\CameraController.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyData.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Camera\LockOnTargetDetector.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyBehaviour.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMClearSignal.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMMessageReceiver.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMOnEnter.cs" />
@@ -622,6 +622,9 @@
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Soul_Like_Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>D:/Soul_Like_Demo/FightBoss Demo/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>D:/Soul_Like_Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
@@ -645,6 +648,9 @@
     </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
       <HintPath>D:/Soul_Like_Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>D:/Soul_Like_Demo/FightBoss Demo/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>D:/Soul_Like_Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

@@ -19,8 +19,8 @@ TagManager:
   - EnemyWeapon
   - 
   - Ground
-  - 
-  - 
+  - PlayerDetector
+  - EnemyDetector
   - 
   - 
   - 
