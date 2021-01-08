@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    // component
     private GameObject player;
     private Transform playerTrans;
     private Transform cameraMain;
@@ -11,7 +12,11 @@ public class CameraController : MonoBehaviour
     private LockOnTargetDetector detector;
     public Transform target = null;
 
-    /* paramaters */
+    // Use the ray to detect whether there is an obstacle between the person and the camera, if there is an obstacle then need to correct the camera position
+    RaycastHit fixedCameraPos;
+    int rayLayerNum;
+
+    // paramaters
     private float distance;
     private float maxDistance = 3f;
     private float dampRate;
@@ -27,6 +32,7 @@ public class CameraController : MonoBehaviour
         ic = player.GetComponent<InputController>( );
         detector = player.GetComponentInChildren<LockOnTargetDetector>( );
         cameraMain = Camera.main.transform;
+        rayLayerNum = LayerMask.GetMask( "Ground" );
     }
 
     // Update is called once per frame
@@ -54,6 +60,8 @@ public class CameraController : MonoBehaviour
         }
         ResetRotationSignal( );
 
+        // fix
+        FixCameraPos( );
 
         // calculate offset
         transform.position = playerTrans.position - transform.rotation * cameraOffset + Vector3.up * cameraHeight;
@@ -66,13 +74,7 @@ public class CameraController : MonoBehaviour
         distance = Vector3.Distance( cameraMain.position, this.transform.position );
         dampRate = 1 - Mathf.Min(  distance / maxDistance, 0.9f);
         // using damp
-        cameraMain.position = Vector3.SmoothDamp( cameraMain.position, transform.position, ref cameraDampVelocity, dampRate * 0.3f );
-
-        // using lerp
-        //cameraDampVelocity.x = Mathf.Lerp( cameraMain.position.x, transform.position.x, 12f * dampRate * Time.fixedDeltaTime );
-        //cameraDampVelocity.y = Mathf.Lerp( cameraMain.position.y, transform.position.y, 15f * dampRate * Time.fixedDeltaTime );
-        //cameraDampVelocity.z = Mathf.Lerp( cameraMain.position.z, transform.position.z, 20f * dampRate * Time.fixedDeltaTime );
-        //cameraMain.position = cameraDampVelocity;
+        cameraMain.position = Vector3.SmoothDamp( cameraMain.position, transform.position, ref cameraDampVelocity, dampRate * 0.2f );
     }
 
     private void ResetRotationSignal() {
@@ -85,5 +87,13 @@ public class CameraController : MonoBehaviour
         if (angle > 0)
             return angle - 180;
         return angle + 180;
+    }
+
+    private void FixCameraPos() {
+        if(Physics.Raycast( playerTrans.position + playerTrans.up * 1.5f , -cameraMain.forward , out fixedCameraPos, 5f , rayLayerNum )) {
+            Debug.DrawLine( playerTrans.position + playerTrans.up * 1.5f , fixedCameraPos.point , Color.blue );
+            transform.position = fixedCameraPos.point ;
+            cameraOffset.z = fixedCameraPos.distance - 0.2f;
+        }
     }
 }

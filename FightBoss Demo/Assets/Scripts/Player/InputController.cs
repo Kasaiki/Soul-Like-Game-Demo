@@ -59,8 +59,9 @@ public class InputController : MonoBehaviour
     }
 
     private void Start() {
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         inputEnabled = true;
         cameraLockOn = false;
         cameraVerticalSignal = 0;
@@ -85,6 +86,43 @@ public class InputController : MonoBehaviour
 
     public bool IsRun {
         get { return m_isRun && m_isMove && inputEnabled; }
+    }
+
+    IEnumerator AttackWait() {
+        m_Attack = true;
+        yield return m_AttackInputWait;
+        m_Attack = false;
+    }
+
+    IEnumerator HeaveAttackWait() {
+        m_HeaveAttack = true;
+        yield return m_HeaveAttackInputWait;
+        m_HeaveAttack = false;
+    }
+
+    IEnumerator DashWait() {
+        m_Dash = true;
+        yield return m_DashInputWait;
+        m_Dash = false;
+    }
+
+    private void DampMovementInput() {
+        moveVerticalSignal = Mathf.SmoothDamp( moveVerticalSignal, targetDup, ref velocityDup, 0.1f );
+        moveHorizontalSignal = Mathf.SmoothDamp( moveHorizontalSignal, targetDright, ref velocityDright, 0.1f );
+    }
+
+    private void NormalizeMovementInput(Vector2 input) {
+        Vector2 output = Vector2.zero;
+
+        fixedMoveHorizontalSignal = input.x * Mathf.Sqrt( 1 - (input.y * input.y / 2.0f) );
+        fixedMoveVerticalSignal = input.y * Mathf.Sqrt( 1 - (input.x * input.x / 2.0f) );
+    }
+
+    private void CalculateMovement() {
+        //targetMagnitude = Mathf.Sqrt( (fixedMoveVerticalSignal * fixedMoveVerticalSignal) + (fixedMoveHorizontalSignal * fixedMoveHorizontalSignal) );
+        targetDirection = fixedMoveHorizontalSignal * Camera.main.transform.right + fixedMoveVerticalSignal * Camera.main.transform.forward;
+        targetDirection.y = 0;
+        targetDirection.Normalize( );
     }
 
     // Update is called once per frame
@@ -143,42 +181,5 @@ public class InputController : MonoBehaviour
 
         /* calculate magnitude and direction */
         CalculateMovement( );
-    }
-
-    IEnumerator AttackWait() {
-        m_Attack = true;
-        yield return m_AttackInputWait;
-        m_Attack = false;
-    }
-
-    IEnumerator HeaveAttackWait() {
-        m_HeaveAttack = true;
-        yield return m_HeaveAttackInputWait;
-        m_HeaveAttack = false;
-    }
-
-    IEnumerator DashWait() {
-        m_Dash = true;
-        yield return m_DashInputWait;
-        m_Dash = false;
-    }
-
-    private void DampMovementInput() {
-        moveVerticalSignal = Mathf.SmoothDamp( moveVerticalSignal, targetDup, ref velocityDup, 0.1f );
-        moveHorizontalSignal = Mathf.SmoothDamp( moveHorizontalSignal, targetDright, ref velocityDright, 0.1f );
-    }
-
-    private void NormalizeMovementInput(Vector2 input) {
-        Vector2 output = Vector2.zero;
-
-        fixedMoveHorizontalSignal = input.x * Mathf.Sqrt( 1 - (input.y * input.y / 2.0f) );
-        fixedMoveVerticalSignal = input.y * Mathf.Sqrt( 1 - (input.x * input.x / 2.0f) );
-    }
-
-    private void CalculateMovement() {
-        //targetMagnitude = Mathf.Sqrt( (fixedMoveVerticalSignal * fixedMoveVerticalSignal) + (fixedMoveHorizontalSignal * fixedMoveHorizontalSignal) );
-        targetDirection = fixedMoveHorizontalSignal * Camera.main.transform.right + fixedMoveVerticalSignal * Camera.main.transform.forward;
-        targetDirection.y = 0;
-        targetDirection.Normalize( );
     }
 }

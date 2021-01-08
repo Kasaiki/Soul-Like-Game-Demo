@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public InputController ic;
     public Animator m_Animator;
     public Rigidbody rig;
+    public Transform targetDirector;
     public GameObject model;
 
     // Animator parameters
@@ -15,7 +16,9 @@ public class PlayerController : MonoBehaviour
     public bool canAttack = true;
 
     // Player propoties
-    public float rotationSpeed = 12f;
+    private float currentRotateSpeed = 480f;
+    private float maxRotateSpeed = 480f;
+    private float minRotateSpeed = 120f;
 
     // Animator parameters Hash 
     readonly int m_HashForwardSpeed = Animator.StringToHash( "ForwardSpeed" );
@@ -35,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     /* Animator state info */
     protected AnimatorStateInfo m_CurrentStateInfo;
+    protected AnimatorStateInfo m_LastStateInfo;
     protected float m_AngleDifferent;
 
     void Start()
@@ -42,64 +46,48 @@ public class PlayerController : MonoBehaviour
         ic = GetComponent<InputController>( );
         rig = GetComponentInParent<Rigidbody>( );
         m_Animator = GetComponentInChildren<Animator>( );
-
-    }
-
-    void FixedUpdate()
-    {
-        CacheAnimatorState( );
-        ChangeRotationSpeed( );
-
-        m_Animator.SetFloat( m_HashStateTime, Mathf.Repeat( m_Animator.GetCurrentAnimatorStateInfo( 0 ).normalizedTime, 1f ) );
-        m_Animator.ResetTrigger( m_HashAttack );
-        m_Animator.ResetTrigger( m_HashDash );
-        m_Animator.ResetTrigger( m_HashHeaveAttack );
-
-        SetDash( );
-        SetAttack( );
-        SetHeaveAttck( );
-
-        TurningCharacter( );
-        MoveCharacter( );
+        targetDirector = GameObject.FindGameObjectWithTag( "PlayerDirector" ).transform;
 
     }
 
     // smoothly rotate
-    void TurningCharacter( ) {
+    void TurningCharacter() {
         if (ic.IsMove) {
-            Quaternion targetDir = Quaternion.LookRotation( ic.targetDirection, Vector3.up );
-            model.transform.rotation = Quaternion.Slerp( model.transform.rotation, targetDir, rotationSpeed * Time.fixedDeltaTime );
-            //model.transform.forward = Vector3.Slerp( model.transform.forward, ic.Dvec, rotationSpeed);
+            targetDirector.forward = ic.targetDirection;
+            model.transform.rotation = Quaternion.RotateTowards( model.transform.rotation, targetDirector.rotation, currentRotateSpeed * Time.fixedDeltaTime );
         }
     }
 
-    void MoveCharacter( ) {
+    void MoveCharacter() {
         float currForwardSpeed = m_Animator.GetFloat( m_HashForwardSpeed );
-        if ( ic.IsRun ) {
-            m_Animator.SetFloat( m_HashForwardSpeed, Mathf.Lerp( currForwardSpeed, 1f, 0.4f ) );
+        if (ic.IsRun && m_CurrentStateInfo.IsName("Moving")) {
+            if (m_LastStateInfo.IsName( "Dash" )) {
+                m_Animator.SetFloat( m_HashForwardSpeed, 0.4f );
+            } else {
+                m_Animator.SetFloat( m_HashForwardSpeed, Mathf.MoveTowards( currForwardSpeed, 1f, 3f * Time.fixedDeltaTime ) );
+            }
         } else {
             m_Animator.SetFloat( m_HashForwardSpeed, Mathf.Lerp( currForwardSpeed, 0f, 10f * Time.fixedDeltaTime ) );
         }
         m_Animator.SetBool( m_HashIsMove, ic.IsMove );
-
-        if (m_CurrentStateInfo.IsName( "Dash" )) {
-            float velocity = m_Animator.GetFloat( m_Curve_DashVelocity );
-            rig.transform.position +=  velocity * m_Animator.transform.forward;
-        }
     }
 
     void ChangeRotationSpeed() {
-        print( rotationSpeed );
-        if(m_CurrentStateInfo.IsTag( "Attacking" )) {
-            rotationSpeed = 2f;
+        if (m_CurrentStateInfo.IsTag( "Attacking" )) {
+            currentRotateSpeed = minRotateSpeed;
         } else {
-            rotationSpeed = 12f;
+            currentRotateSpeed = maxRotateSpeed;
         }
     }
 
     void SetDash() {
         if (ic.Dash) {
             m_Animator.SetTrigger( m_HashDash );
+        }
+
+        if (m_CurrentStateInfo.IsName( "Dash" )) {
+            float velocity = m_Animator.GetFloat( m_Curve_DashVelocity );
+            rig.transform.position += velocity * m_Animator.transform.forward;
         }
     }
 
@@ -115,7 +103,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void ResetAllTriggers() {
+        m_Animator.ResetTrigger( m_HashAttack );
+        m_Animator.ResetTrigger( m_HashDash );
+        m_Animator.ResetTrigger( m_HashHeaveAttack );
+    }
+
     void CacheAnimatorState() {
         m_CurrentStateInfo = m_Animator.GetCurrentAnimatorStateInfo( 0 );
+        m_Animator.SetFloat( m_HashStateTime, Mathf.Repeat( m_CurrentStateInfo.normalizedTime, 1f ) );
+    }
+
+    void FixedUpdate()
+    {
+        CacheAnimatorState( );
+        ChangeRotationSpeed( );
+
+        ResetAllTriggers( );
+
+        SetDash( );
+        SetAttack( );
+        SetHeaveAttck( );
+
+        TurningCharacter( );
+        MoveCharacter( );
+
+        m_LastStateInfo = m_CurrentStateInfo;
     }
 }
