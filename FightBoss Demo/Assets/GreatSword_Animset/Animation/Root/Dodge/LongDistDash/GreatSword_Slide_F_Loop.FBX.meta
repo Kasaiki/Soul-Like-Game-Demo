@@ -503,7 +503,7 @@ ModelImporter:
       DOF on avatar to improve retargeting quality.\n\t'spine_01' has translation
       animation that will be discarded.\n"
     animationRetargetingWarnings: 
-    animationDoRetargetingWarnings: 0
+    animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
     importConstraints: 0
     animationCompression: 0

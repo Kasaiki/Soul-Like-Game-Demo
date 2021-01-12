@@ -28,7 +28,7 @@ public class WeaponManager : MonoBehaviour
         Vector3 location = this.transform.position;
         Vector3 hitPoint = target.ClosestPointOnBounds( location );
 
-        Debug.Log( hitPoint );
+        //Debug.Log( hitPoint );
     }
 
     private void LateUpdate() {
