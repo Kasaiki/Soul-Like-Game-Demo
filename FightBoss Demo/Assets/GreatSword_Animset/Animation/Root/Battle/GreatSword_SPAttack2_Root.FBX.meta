@@ -544,59 +544,7 @@ ModelImporter:
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves:
-      - name: JumpSpeed
-        curve:
-          serializedVersion: 2
-          curve:
-          - serializedVersion: 3
-            time: 0
-            value: 0
-            inSlope: 0.032490257
-            outSlope: 0.032490257
-            tangentMode: 34
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0.33333334
-          - serializedVersion: 3
-            time: 0.1440198
-            value: 0.0046792403
-            inSlope: 0.33081272
-            outSlope: 0.33081272
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.086403646
-          - serializedVersion: 3
-            time: 0.20610866
-            value: 1.729166
-            inSlope: 1.231543
-            outSlope: 1.231543
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.33333334
-          - serializedVersion: 3
-            time: 0.36605048
-            value: 0.01846373
-            inSlope: -2.686972
-            outSlope: -2.686972
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.12640262
-          - serializedVersion: 3
-            time: 1
-            value: 0
-            inSlope: -0.029124923
-            outSlope: -0.029124923
-            tangentMode: 34
-            weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0
-          preInfinity: 2
-          postInfinity: 2
-          rotationOrder: 4
+      curves: []
       events: []
       transformMask:
       - path: 

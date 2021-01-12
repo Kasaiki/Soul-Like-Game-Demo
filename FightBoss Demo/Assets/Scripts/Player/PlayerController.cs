@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// このクラスでアニメーションに関する処理を行う
 public class PlayerController : MonoBehaviour
 {
     // Components
@@ -16,8 +17,8 @@ public class PlayerController : MonoBehaviour
     public bool canAttack = true;
 
     // Player propoties
-    private float currentRotateSpeed = 480f;
-    private float maxRotateSpeed = 480f;
+    private float currentRotateSpeed = 1080f;
+    private float maxRotateSpeed = 1080f;
     private float minRotateSpeed = 120f;
 
     // Animator parameters Hash 
@@ -33,10 +34,10 @@ public class PlayerController : MonoBehaviour
 
     readonly int m_Curve_DashVelocity = Animator.StringToHash( "DashVelocity" );
 
-    /* Animator State Name Hash */
+    // Animator State Name Hash
     readonly int m_State_Move = Animator.StringToHash( "Move" );
 
-    /* Animator state info */
+    //　Animator state info
     protected AnimatorStateInfo m_CurrentStateInfo;
     protected AnimatorStateInfo m_LastStateInfo;
     protected float m_AngleDifferent;
@@ -81,13 +82,16 @@ public class PlayerController : MonoBehaviour
     }
 
     void SetDash() {
-        if (ic.Dash) {
-            m_Animator.SetTrigger( m_HashDash );
-        }
-
         if (m_CurrentStateInfo.IsName( "Dash" )) {
+            if(ic.Dash && m_Animator.GetFloat(m_HashStateTime) > 0.8) {
+                m_Animator.SetTrigger( m_HashDash );
+            }
             float velocity = m_Animator.GetFloat( m_Curve_DashVelocity );
             rig.transform.position += velocity * m_Animator.transform.forward;
+        } else {
+            if (ic.Dash) {
+                m_Animator.SetTrigger( m_HashDash );
+            }
         }
     }
 

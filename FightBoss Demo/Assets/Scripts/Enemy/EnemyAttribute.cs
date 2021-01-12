@@ -10,30 +10,20 @@ public class EnemyAttribut : MonoBehaviour
 
     // states
     protected EnemyState enemyState;
-    protected ShortDistAction shortDistAction;
-    protected MediumDistAction mediumDistAction;
+    protected Dist distInfo;
 
     protected enum EnemyState
     {
         Dead,
-        Broken,
         Hit,
-        Attack,
-        Move,
+        Action,
         Idle,
     }
 
-    protected enum ShortDistAction
+    protected enum Dist
     {
-        TripleCombo,
-        FloatingDoubleStrike,
-        HeaveDoubleStrike,
-    }
-
-    protected enum MediumDistAction
-    {
-        TripleCombo,
-        FloatingDoubleStrike,
-        HeaveDoubleStrike,
+        ShortDist,
+        MediumDist,
+        LongDist,
     }
 }

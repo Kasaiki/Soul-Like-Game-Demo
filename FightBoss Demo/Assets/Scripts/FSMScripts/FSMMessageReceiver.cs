@@ -15,7 +15,7 @@ public class FSMMessageReceiver : MonoBehaviour
     }
 
     // attached on DashAttack / OnEnterMove
-    private void OnExitDashAttack() {
+    void OnExitDashAttack() {
         anim.SetFloat( "ForwardSpeed", 0f );
     }
 }

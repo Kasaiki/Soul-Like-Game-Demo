@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LockOnTargetDetector : MonoBehaviour
 {
+
+
     public int currTargetIndex = 0;
 
     public ArrayList targetsList = new ArrayList( );
@@ -21,4 +23,6 @@ public class LockOnTargetDetector : MonoBehaviour
             return (Transform)targetsList[currTargetIndex];
         return null;
     }
+
+
 }

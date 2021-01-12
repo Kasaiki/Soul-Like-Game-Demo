@@ -12,13 +12,14 @@ public class WeaponController : MonoBehaviour
         weaponManager = GetComponentInChildren<WeaponManager>( );
     }
 
-    // Animation Event
+    // Animation Eventから呼び出します
     void StartAttackEvent() {
         print( "Start Attack");
         // play sound
         weaponManager.WeaponEnable = true;
     }
 
+    // Animation Eventから呼び出します
     void EndAttackEvent() {
         print( "End Attack" );
         // stop play sound
