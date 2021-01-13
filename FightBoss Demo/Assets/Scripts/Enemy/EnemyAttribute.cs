@@ -5,6 +5,7 @@ using UnityEngine;
 abstract public class EnemyAttribute : MonoBehaviour
 {
     // states
+    [SerializeField]
     protected State state;
     protected Dist distInfo;
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6124096062798817355}
   - component: {fileID: 6124096062797687435}
   - component: {fileID: 6124096062805198731}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TwinSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 6124096063438180810}
   - component: {fileID: 6124096063437050634}
   - component: {fileID: 6124096063431998986}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TwinSword (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6935440808136102250}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}

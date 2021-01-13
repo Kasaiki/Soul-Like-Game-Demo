@@ -19,12 +19,12 @@ public class PlayerData : ActorAttribute
     }
 
     /// <summary>
-    /// HP処理を行うファンクション
+    /// 被ダメージされるときのHP処理を行うインターフェースファンクション
     /// </summary>
     /// <param name="value"></param>
-    public void PlayerIsHitted() {
+    public override void DoDamage(float damage) {
         print( "player is hit" );
-        HP = Mathf.Clamp( HP - 70, 0, MaxHP );
+        HP = Mathf.Clamp( HP - damage, 0, MaxHP );
         BarUpdate( );
     }
 }

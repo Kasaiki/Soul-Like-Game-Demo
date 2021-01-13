@@ -1875,7 +1875,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400002, guid: 842a2a43b6b82a14bbb78548d7aab86f, type: 3}
-  m_Tag: 
+  m_Tag: Dash
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 

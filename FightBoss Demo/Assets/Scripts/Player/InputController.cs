@@ -71,7 +71,7 @@ public class InputController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         inputEnabled = true;
-        cameraLockOn = false;
+        cameraLockOn = true;
         cameraVerticalSignal = 0;
         cameraHorizontalSignal = 0;
     }
@@ -180,7 +180,6 @@ public class InputController : MonoBehaviour
 
         if(Input.GetKeyDown( KeyCode.LeftControl )) {
             cameraLockOn = !cameraLockOn;
-            print( " lock mode is :" + cameraLockOn );
         }
 
         /* normalize movement input */

@@ -18,4 +18,8 @@ public class FSMMessageReceiver : MonoBehaviour
     void OnExitDashAttack() {
         anim.SetFloat( "ForwardSpeed", 0f );
     }
+
+    void OnEnterHit() {
+        anim.ResetTrigger( "Hit" );
+    }
 }

@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     public Transform targetDirector;
     [SerializeField]
     public GameObject model;
+    [SerializeField]
+    public WeaponManager weaponManager;
 
     // Animator parameters
     public bool canDash = true;
@@ -41,7 +43,6 @@ public class PlayerController : MonoBehaviour
     readonly int m_HashIsMove = Animator.StringToHash( "IsMove" );
     readonly int m_HashDash = Animator.StringToHash( "Dash" );
     readonly int m_HashStateTime = Animator.StringToHash( "StateTime" );
-
     readonly int m_Curve_DashVelocity = Animator.StringToHash( "DashVelocity" );
 
     // Animator State Name Hash
@@ -54,11 +55,25 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        ic = GetComponent<InputController>( );
+        playerData = GetComponentInParent<PlayerData>( );
+        ic = GetComponentInParent<InputController>( );
         rig = GetComponentInParent<Rigidbody>( );
-        m_Animator = GetComponentInChildren<Animator>( );
+        m_Animator = GetComponent<Animator>( );
         targetDirector = GameObject.FindGameObjectWithTag( "PlayerDirector" ).transform;
+        weaponManager = GetComponentInChildren<PlayerWeaponManager>( );
+    }
 
+
+    // Animation Eventから呼び出します
+    void StartAttackEvent() {
+        // play sound
+        weaponManager.weaponEnable = true;
+    }
+
+    // Animation Eventから呼び出します
+    void EndAttackEvent() {
+        // stop play sound
+        weaponManager.weaponEnable = false;
     }
 
     // smoothly rotate
@@ -81,6 +96,7 @@ public class PlayerController : MonoBehaviour
             m_Animator.SetFloat( m_HashForwardSpeed, Mathf.Lerp( currForwardSpeed, 0f, 10f * Time.fixedDeltaTime ) );
         }
         m_Animator.SetBool( m_HashIsMove, ic.IsMove );
+        rig.velocity = Vector3.zero;
     }
 
     void ChangeRotationSpeed() {

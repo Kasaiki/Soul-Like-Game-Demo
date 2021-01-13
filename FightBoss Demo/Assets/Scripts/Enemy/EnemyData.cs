@@ -18,5 +18,14 @@ public class EnemyData : ActorAttribute
         BarUpdate( );
     }
 
-
+    /// <summary>
+    /// 敵のダメージ処理
+    /// </summary>
+    /// <param name="damage"></param>
+    public override void DoDamage(float damage) {
+        print( "Enemy is hit" );
+        HP = Mathf.Clamp( HP - damage, 0, MaxHP );
+        STA = Mathf.Clamp( STA - damage, 0, MaxSTA );
+        BarUpdate( );
+    }
 }

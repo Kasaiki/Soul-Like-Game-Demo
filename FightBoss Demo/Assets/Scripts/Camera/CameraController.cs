@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    #region コンポーネントと変数の宣言
     // component
     private GameObject player;
     private Transform playerTrans;
@@ -24,8 +25,9 @@ public class CameraController : MonoBehaviour
     private Vector3 cameraOffset = new Vector3( 0, 0, 5f );
     private Vector3 cameraTargetDir;
     private Vector3 cameraDampVelocity;
+    #endregion
 
-
+    #region　初期化
     private void Start() {
         player = GameObject.FindGameObjectWithTag( "Player" );
         playerTrans = player.GetComponent<Transform>( );
@@ -34,47 +36,53 @@ public class CameraController : MonoBehaviour
         cameraMain = Camera.main.transform;
         rayLayerNum = LayerMask.GetMask( "Ground" );
     }
+    #endregion
 
+    #region　Update
     // Update is called once per frame
     void FixedUpdate() {
         if (ic.cameraLockOn && detector.targetsList.Count > 0) {
             target = detector.GetTargetTrans( );
-            /* Lockon Mode */
-            cameraTargetDir = Vector3.Normalize(target.position - playerTrans.position); // get a direction vector
-            cameraTargetDir.y = 0; // Clear the Y-axis value to prevent the camera facing UP direction when the distance is too close
+            // ロックオンモードでのカメラ目標方向の計算
+            cameraTargetDir = Vector3.Normalize(target.position - playerTrans.position); // 方向ベクトルを算出します
+            cameraTargetDir.y = 0; // Y座標をクリアします
             transform.forward = Vector3.Slerp( transform.forward, cameraTargetDir, 0.2f );
 
-            // update the camera rotation
+            // カメラに算出した結果を反応します
             cameraMain.LookAt(  target.transform.position );
         } else {
-            /* Unlock Mode */
-            cameraTargetDir =  cameraMain.rotation.eulerAngles; // Update the current camera position to prevent misplaced camera positions when calling back from LockOn mode
-            cameraTargetDir.x = NormalizeAngle( cameraTargetDir.x ); // Change x-axis rotation value range from [0,360] to [-180, 180]
-            cameraTargetDir.x = Mathf.Clamp( Mathf.Lerp( cameraTargetDir.x ,  cameraTargetDir.x + ic.cameraVerticalSignal , 0.2f ), -30, 50 ); // Calculate X-axis rotation
-            cameraTargetDir.y = Mathf.Lerp( cameraTargetDir.y, cameraTargetDir.y + ic.cameraHorizontalSignal, 0.2f ); // Calculate Y-axis rotation
-            cameraTargetDir.z = 0;
+            //　非ロックオンモードでのカメラ回転量の計算
+            cameraTargetDir =  cameraMain.rotation.eulerAngles; // ロックオンモードから切り替えてきたときの回転量をクリアします
+            cameraTargetDir.x = NormalizeAngle( cameraTargetDir.x ); // 垂直方向での[0,360]の度数範囲を[-180, 180]に正規化します
+            cameraTargetDir.x = Mathf.Clamp( Mathf.Lerp( cameraTargetDir.x ,  cameraTargetDir.x + ic.cameraVerticalSignal , 0.2f ), -30, 50 ); // 垂直方向の計算
+            cameraTargetDir.y = Mathf.Lerp( cameraTargetDir.y, cameraTargetDir.y + ic.cameraHorizontalSignal, 0.2f ); // 水平方向の計算
+            cameraTargetDir.z = 0;　//　Z方向をクリアします
             transform.rotation = Quaternion.Euler( cameraTargetDir ); 
 
-            // update the camera rotation
+            // カメラに回転量を反応します
             cameraMain.rotation = transform.rotation;
         }
+
+        // 反応された回転をInputから消します。
         ResetRotationSignal( );
 
-        // fix
+        // カメラ位置補正
         FixCameraPos( );
 
-        // calculate offset
+        // カメラとキャラクター間のオフセットを再計算
         transform.position = playerTrans.position - transform.rotation * cameraOffset + Vector3.up * cameraHeight;
 
-        // update the camera position smoothly
+        // 計算された位置をカメラに反応します
         UpdateCameraPos( );
     }
+    #endregion
 
+    #region ファンクションの実現
     void UpdateCameraPos() {
         distance = Vector3.Distance( cameraMain.position, this.transform.position );
         dampRate = 1 - Mathf.Min(  distance / maxDistance, 0.9f);
         // using damp
-        cameraMain.position = Vector3.SmoothDamp( cameraMain.position, transform.position, ref cameraDampVelocity, dampRate * 0.2f );
+        cameraMain.position = Vector3.SmoothDamp( cameraMain.position, transform.position, ref cameraDampVelocity, dampRate * 0.3f );
     }
 
     private void ResetRotationSignal() {
@@ -89,6 +97,9 @@ public class CameraController : MonoBehaviour
         return angle + 180;
     }
 
+    /// <summary>
+    /// Rayを用いて、カメラを地面に落ち込めないように補正する関数になります。
+    /// </summary>
     private void FixCameraPos() {
         if(Physics.Raycast( playerTrans.position + playerTrans.up * 1.5f , -cameraMain.forward , out fixedCameraPos, 5f , rayLayerNum )) {
             Debug.DrawLine( playerTrans.position + playerTrans.up * 1.5f , fixedCameraPos.point , Color.blue );
@@ -96,4 +107,5 @@ public class CameraController : MonoBehaviour
             cameraOffset.z = fixedCameraPos.distance - 0.2f;
         }
     }
+    #endregion
 }

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ActorAttribute : MonoBehaviour
+abstract public class ActorAttribute : MonoBehaviour , IDamageEnable
 {
+    #region 属性
     [SerializeField]
     protected float _HP;
     [SerializeField]
@@ -17,9 +18,9 @@ public class ActorAttribute : MonoBehaviour
     protected float ATK;
     [SerializeField]
     protected float DEF;
+    #endregion
 
-
-
+    #region 属性を取得するためのメソッド
     public float HP {
         get { return _HP; }
         set { _HP = value; }
@@ -30,11 +31,28 @@ public class ActorAttribute : MonoBehaviour
         set { _STA = value; }
     }
 
+    public float getMaxSTA {
+        get { return MaxSTA; }
+    }
+
+    public float getMaxHP {
+        get { return MaxHP; }
+    }
+
+    public float getATK {
+        get { return ATK; }
+    }
+
+    public float getDEF {
+        get { return DEF; }
+    }
+    #endregion
+
+    #region UI関連
     [SerializeField]
     protected Slider HPBar;
     [SerializeField]
     protected Slider STABar;
-
 
     /// <summary>
     /// HPバーとSTAバーの最大値と最小値を設定します
@@ -60,4 +78,9 @@ public class ActorAttribute : MonoBehaviour
         HPBar.value = HP;
         STABar.value = STA;
     }
+    #endregion 
+
+    #region インターフェース
+    public abstract void DoDamage(float damage);
+    #endregion
 }

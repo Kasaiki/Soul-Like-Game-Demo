@@ -15,10 +15,6 @@ public class GameManager : MonoBehaviour
         gm = this;
     }
 
-    public void AddHP(int count) {
-        // do something
-    }
-
     public void GameOver() {
         // do something
         SceneManager.LoadScene( "Title" );

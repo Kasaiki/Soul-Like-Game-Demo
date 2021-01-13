@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\Scripts\Camera\LockOnTargetDetector.cs" />
     <Compile Include="Assets\Scripts\Common\ActorAttribute.cs" />
+    <Compile Include="Assets\Scripts\Common\WeaponManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAttribute.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyBehaviour.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyData.cs" />
@@ -78,14 +79,15 @@
     <Compile Include="Assets\Scripts\FSMScripts\FSMOnExit.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMOnUpdate.cs" />
     <Compile Include="Assets\Scripts\Function\Shakeable.cs" />
+    <Compile Include="Assets\Scripts\Interface\IDamageEnable.cs" />
     <Compile Include="Assets\Scripts\Player\InputController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Player\RootMotionFix.cs" />
     <Compile Include="Assets\Scripts\System\GameManager.cs" />
     <Compile Include="Assets\Scripts\System\SceneControl.cs" />
-    <Compile Include="Assets\Scripts\Weapon\WeaponController.cs" />
-    <Compile Include="Assets\Scripts\Weapon\WeaponManager.cs" />
+    <Compile Include="Assets\Scripts\Weapon\EnemyWeaponManager.cs" />
+    <Compile Include="Assets\Scripts\Weapon\PlayerWeaponManager.cs" />
     <None Include="Assets\KY_effects\MagicEffectsPackFree\ReadMe.txt" />
     <Reference Include="UnityEngine">
       <HintPath>D:/Unity/2019.4.16f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

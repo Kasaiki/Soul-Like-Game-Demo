@@ -11,9 +11,9 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.09131762, z: 0.48268878}
-  m_Center: {x: -1.1, y: -0.0000015689363, z: 0.009030809}
---- !u!114 &7430727220709901572
+  m_Size: {x: 2.5, y: 0.09131762, z: 0.48268878}
+  m_Center: {x: -1.3, y: -0.0000015689363, z: 0.009030809}
+--- !u!114 &907686580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22,10 +22,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7430727220709868454}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aee4cb93c55ac984aa20fb48913c7ab0, type: 3}
+  m_Script: {fileID: 11500000, guid: 022a6709d18a48542b45dbdf288fa01b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ATK: 0
   weaponColliders: []
   weaponEnable: 0
 --- !u!1 &7430727221462296437
@@ -208,7 +207,7 @@ GameObject:
   - component: {fileID: 7430727222208499062}
   - component: {fileID: 7430727222208499060}
   - component: {fileID: 7430727222208499061}
-  - component: {fileID: 7430727222208499058}
+  - component: {fileID: 1700676093}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -225,7 +224,7 @@ Transform:
   m_GameObject: {fileID: 7430727222208596578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 7430727222208894886}
   - {fileID: 7430727222208894850}
@@ -309,17 +308,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e83f755bd763a7146843dee94d2fa99c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 0
-  MaxHP: 0
-  _STA: 0
-  MaxSTA: 0
-  ATK: 0
-  DEF: 0
-  HPBar: {fileID: 0}
-  STABar: {fileID: 0}
   anim: {fileID: 0}
   playerTrans: {fileID: 0}
   targetDirector: {fileID: 0}
+  enemyData: {fileID: 0}
+  weaponManager: {fileID: 0}
   distanceFromPlayer: 0
   longDist: 10
   mediumDist: 5
@@ -329,7 +322,7 @@ MonoBehaviour:
   m_AngleDiff: 0
   m_StateTime: 0
   m_IsInSight: 0
---- !u!114 &7430727222208499058
+--- !u!114 &1700676093
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -338,10 +331,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 7430727222208596578}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7e8eda4750a5b441b3f23f308faae4b, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a684b157caf40240ac84bb2810ce3e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponManager: {fileID: 7430727220709901572}
+  _HP: 0
+  MaxHP: 0
+  _STA: 0
+  MaxSTA: 0
+  ATK: 0
+  DEF: 0
+  HPBar: {fileID: 0}
+  STABar: {fileID: 0}
 --- !u!1 &7430727222208596580
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,6 +2277,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: c42679b5f5373904cab203907d233f45, type: 3}
       propertyPath: m_Name
       value: GreatSword_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: c42679b5f5373904cab203907d233f45, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c42679b5f5373904cab203907d233f45, type: 3}
       propertyPath: m_RootOrder

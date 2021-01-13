@@ -6,13 +6,15 @@ public class EnemyBehaviour : EnemyAttribute
 {
     // components
     [SerializeField]
-    Animator anim;
+    private Animator anim;
     [SerializeField]
-    Transform playerTrans;
+    private Transform playerTrans;
     [SerializeField]
-    Transform targetDirector;
+    private Transform targetDirector;
     [SerializeField]
-    EnemyData enemyData;
+    private EnemyData enemyData;
+    [SerializeField]
+    private WeaponManager weaponManager;
 
     // parameters
     [SerializeField]
@@ -63,8 +65,20 @@ public class EnemyBehaviour : EnemyAttribute
         enemyData = GetComponent<EnemyData>( );
         playerTrans = GameObject.FindGameObjectWithTag( "PlayerDirector" ).transform;
         targetDirector = GameObject.FindGameObjectWithTag( "EnemyDirector" ).transform;
-
+        weaponManager = GetComponentInChildren<EnemyWeaponManager>( );
         state = State.Action;
+    }
+
+    // Animation Eventから呼び出します
+    void StartAttackEvent() {
+        // play sound
+        weaponManager.weaponEnable = true;
+    }
+
+    // Animation Eventから呼び出します
+    void EndAttackEvent() {
+        // stop play sound
+        weaponManager.weaponEnable = false;
     }
 
     /// <summary>
@@ -82,8 +96,10 @@ public class EnemyBehaviour : EnemyAttribute
     void CheckState() {
         if ( enemyData.HP <= 0) {
             state = State.Dead;
+            anim.ResetTrigger( m_HashHit );
             return;
         }else if( enemyData.STA <= 0) {
+            enemyData.STA = enemyData.getMaxSTA;
             state = State.Hit;
             return;
         }
@@ -125,14 +141,25 @@ public class EnemyBehaviour : EnemyAttribute
 
 
     /// <summary>
-    /// 歩く状態と攻撃ステートの最初10％の時間内は回転することができます
+    /// 攻撃ステートの最初25％の時間内は回転することができます
     /// </summary>
     void EnemyTurning() {
-        if( (m_CurrentStateInfo.IsTag("Attack") && m_StateTime <= 0.25) || !m_CurrentStateInfo.IsTag( "Attack" ) ) {
-            targetDirector.forward = playerTrans.position - transform.position;
+        targetDirector.forward = playerTrans.position - transform.position;
+        if (m_CurrentStateInfo.IsTag( "Hit" ))
+            return;
+        if ( (m_CurrentStateInfo.IsTag("Attack") && m_StateTime <= 0.25) || !m_CurrentStateInfo.IsTag( "Attack" ) ) {
             transform.rotation = Quaternion.RotateTowards( transform.rotation, targetDirector.rotation, rotationSpeed * Time.deltaTime );
         }
 
+    }
+
+    void HitBehaviour() {
+        if (m_CurrentStateInfo.IsTag( "Hit" ) || m_LastStateInfo.IsTag("Hit")) {
+            state = State.Action;
+            return;
+        } else {
+            anim.SetTrigger( m_HashHit );
+        }
     }
 
     /// <summary>
@@ -172,6 +199,8 @@ public class EnemyBehaviour : EnemyAttribute
 
     // Update is called once per frame
     void Update() {
+        if (state == State.Dead)
+            return;
         CacheAnimatorStatus( );
         CheckDistance( );
         CalculateAngle( );
@@ -182,7 +211,7 @@ public class EnemyBehaviour : EnemyAttribute
                 anim.SetTrigger( m_HashDead );
                 break;
             case State.Hit:
-                anim.SetTrigger( m_HashHit );
+                HitBehaviour( );
                 break;
             case State.Action:
                 ChooseAction( );
@@ -190,5 +219,6 @@ public class EnemyBehaviour : EnemyAttribute
             case State.Idle:
                 break;
         }
+        m_LastStateInfo = m_CurrentStateInfo;
     }
 }
