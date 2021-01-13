@@ -12,6 +12,10 @@
 
 このデモはUnity 2019.4.16f1を使用して開発されており、学校の都合で不定期的にコミットされています。
 
+======== クラス仕様（更新中） ========
+
+![Alt text](https://github.com/Kasaiki/Soul-Like-Game-Demo/blob/master/img/%E4%BB%95%E6%A7%98%E5%9B%B3.png)
+
 ======== 現在実装した内容 ========
 
 カメラ関連
