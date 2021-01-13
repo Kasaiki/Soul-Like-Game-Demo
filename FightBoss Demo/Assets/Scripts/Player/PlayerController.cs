@@ -6,10 +6,17 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Components
+    [SerializeField]
     public InputController ic;
+    [SerializeField]
+    public PlayerData playerData;
+    [SerializeField]
     public Animator m_Animator;
+    [SerializeField]
     public Rigidbody rig;
+    [SerializeField]
     public Transform targetDirector;
+    [SerializeField]
     public GameObject model;
 
     // Animator parameters
@@ -17,8 +24,11 @@ public class PlayerController : MonoBehaviour
     public bool canAttack = true;
 
     // Player propoties
+    [SerializeField]
     private float currentRotateSpeed = 1080f;
+    [SerializeField]
     private float maxRotateSpeed = 1080f;
+    [SerializeField]
     private float minRotateSpeed = 120f;
 
     // Animator parameters Hash 
@@ -83,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
     void SetDash() {
         if (m_CurrentStateInfo.IsName( "Dash" )) {
-            if(ic.Dash && m_Animator.GetFloat(m_HashStateTime) > 0.8) {
+            if(ic.Dash && m_Animator.GetFloat(m_HashStateTime) > 0.6) {
                 m_Animator.SetTrigger( m_HashDash );
             }
             float velocity = m_Animator.GetFloat( m_Curve_DashVelocity );
@@ -120,6 +130,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+
         CacheAnimatorState( );
         ChangeRotationSpeed( );
 

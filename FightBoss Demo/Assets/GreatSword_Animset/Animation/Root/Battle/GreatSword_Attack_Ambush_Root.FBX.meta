@@ -502,7 +502,20 @@ ModelImporter:
       warnings that might lower retargeting quality:\nNote: Activate translation
       DOF on avatar to improve retargeting quality.\n\t'spine_01' has translation
       animation that will be discarded.\n"
-    animationRetargetingWarnings: 
+    animationRetargetingWarnings: "\nRetargeting quality report for clip 'GreatSword_Attack_Ambush_Root':\n\tLeftLowerLeg
+      average position error 0.2 mm and maximum position error 3.0 mm at time 1:114
+      (78.0%) Frame 234\n\tLeftUpperArm average position error 6.7 mm and maximum
+      position error 37.5 mm at time 0:49 (16.3%) Frame 49\n\tLeftLowerArm average
+      position error 6.7 mm and maximum position error 37.5 mm at time 0:49 (16.3%)
+      Frame 49\n\tLeftHand average position error 6.7 mm and maximum position error
+      37.5 mm at time 0:49 (16.3%) Frame 49\n\tRightUpperArm average position error
+      6.7 mm and maximum position error 37.5 mm at time 0:49 (16.3%) Frame 49\n\tRightLowerArm
+      average position error 6.7 mm and maximum position error 37.5 mm at time 0:49
+      (16.3%) Frame 49\n\tRightHand average position error 6.7 mm and maximum position
+      error 37.5 mm at time 0:49 (16.3%) Frame 49\n\tHead average position error
+      6.7 mm and maximum position error 37.5 mm at time 0:49 (16.3%) Frame 49\n\tLeftFoot
+      average orientation error 0.1 deg and maximum orientation error 1.0 deg at
+      time 1: 0 (40.0%) Frame 120\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
     importConstraints: 0
@@ -538,7 +551,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.19411764
+        functionName: StartAttackEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.24117646
+        functionName: EndAttackEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

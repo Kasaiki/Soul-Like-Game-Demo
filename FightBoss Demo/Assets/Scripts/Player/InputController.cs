@@ -7,14 +7,21 @@ public class InputController : MonoBehaviour
     // Variables
     [Header( "==== Mouse Setting ====" )]
     public bool mouseEnable = true;
+    [SerializeField]
     private float mouseSensitivityX = 8.0f;
+    [SerializeField]
     private float mouseSensitivityY = 6.0f;
 
     // Key signals
+    [SerializeField]
     private bool m_Dash;
+    [SerializeField]
     private bool m_Attack;
+    [SerializeField]
     private bool m_HeaveAttack;
+    [SerializeField]
     private bool m_isMove;
+    [SerializeField]
     private bool m_isRun;
 
     [Header( "==== Input Signals ====" )]
@@ -50,12 +57,13 @@ public class InputController : MonoBehaviour
     Coroutine m_AttackWaitCoroutine;
     Coroutine m_HeaveAttackWaitCoroutine;
     Coroutine m_DashWaitCoroutine;
-    const float k_InputWait = 0.08f;
+
+    const float InputWaitTime = 0.08f;
 
     private void Awake() {
-        m_AttackInputWait = new WaitForSeconds( k_InputWait );
-        m_HeaveAttackInputWait = new WaitForSeconds( k_InputWait );
-        m_DashInputWait = new WaitForSeconds( k_InputWait );
+        m_AttackInputWait = new WaitForSeconds( InputWaitTime );
+        m_HeaveAttackInputWait = new WaitForSeconds( InputWaitTime );
+        m_DashInputWait = new WaitForSeconds( InputWaitTime );
     }
 
     private void Start() {

@@ -2,21 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour
+// シングルトンを用いた、データ処理に使うクラス
+public class PlayerData : ActorAttribute
 {
-    /* Player Attribute */
-    float HP;
-    float STA; // stamina
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    private void Start() {
+        MaxHP = 500;
+        MaxSTA = 200;
+
+        InitUI( );
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        BarUpdate( );
+    }
+
+    /// <summary>
+    /// HP処理を行うファンクション
+    /// </summary>
+    /// <param name="value"></param>
+    public void PlayerIsHitted() {
+        print( "player is hit" );
+        HP = Mathf.Clamp( HP - 70, 0, MaxHP );
+        BarUpdate( );
     }
 }

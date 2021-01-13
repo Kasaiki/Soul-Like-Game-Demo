@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttribut : MonoBehaviour
+abstract public class EnemyAttribute : MonoBehaviour
 {
-    protected int currtHP, maxHP;
-    protected int currtSTA, maxSTA;
-    protected int ATK;
-
     // states
-    protected EnemyState enemyState;
+    protected State state;
     protected Dist distInfo;
 
-    protected enum EnemyState
+    protected enum State
     {
         Dead,
         Hit,
@@ -25,5 +21,10 @@ public class EnemyAttribut : MonoBehaviour
         ShortDist,
         MediumDist,
         LongDist,
+    }
+
+    public void EnemyIsHitted() {
+
+
     }
 }

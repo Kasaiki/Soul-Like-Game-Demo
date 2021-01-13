@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 武器コリジョン
+/// </summary>
 public class WeaponController : MonoBehaviour
 {
     public WeaponManager weaponManager;
@@ -14,14 +17,12 @@ public class WeaponController : MonoBehaviour
 
     // Animation Eventから呼び出します
     void StartAttackEvent() {
-        print( "Start Attack");
         // play sound
         weaponManager.WeaponEnable = true;
     }
 
     // Animation Eventから呼び出します
     void EndAttackEvent() {
-        print( "End Attack" );
         // stop play sound
         weaponManager.WeaponEnable = false;
     }

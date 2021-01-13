@@ -68,8 +68,10 @@
     <Compile Include="Assets\KY_effects\Script\Lighting.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\Scripts\Camera\LockOnTargetDetector.cs" />
+    <Compile Include="Assets\Scripts\Common\ActorAttribute.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAttribute.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyData.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMClearSignal.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMMessageReceiver.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMOnEnter.cs" />

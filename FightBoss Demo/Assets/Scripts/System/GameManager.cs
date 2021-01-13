@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager gm;
 
+    private static GameManager gm;
     public static GameManager getGM {
         get { return gm; }
     }

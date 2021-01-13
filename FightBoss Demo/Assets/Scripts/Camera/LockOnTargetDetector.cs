@@ -5,7 +5,6 @@ using UnityEngine;
 public class LockOnTargetDetector : MonoBehaviour
 {
 
-
     public int currTargetIndex = 0;
 
     public ArrayList targetsList = new ArrayList( );

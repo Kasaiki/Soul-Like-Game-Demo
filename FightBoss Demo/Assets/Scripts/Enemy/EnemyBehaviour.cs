@@ -2,37 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehaviour : EnemyAttribut
+public class EnemyBehaviour : EnemyAttribute
 {
     // components
+    [SerializeField]
     Animator anim;
+    [SerializeField]
     Transform playerTrans;
+    [SerializeField]
     Transform targetDirector;
+    [SerializeField]
+    EnemyData enemyData;
 
     // parameters
+    [SerializeField]
     private float distanceFromPlayer;
+    [SerializeField]
     private float longDist = 10f;
-    private float mediumDist = 5f;
-    private float rotationSpeed = 800f;
+    [SerializeField]
+    private float mediumDist = 4f;
+    [SerializeField]
+    private float rotationSpeed = 300f;
 
     // アニメーターインフォを用いて、アニメーションの状態を把握できます
     AnimatorStateInfo m_CurrentStateInfo;
     AnimatorStateInfo m_LastStateInfo;
+
+    [SerializeField]
     int m_ActionNum;
     /// <summary>
     /// 0は短距離、1は中距離、2は長距離
     /// </summary>
+    [SerializeField]
     int m_DistNum;
     /// <summary>
     /// プレイヤー向きまでの角度
     /// </summary>
+    [SerializeField]
     float m_AngleDiff;
+    /// <summary>
+    /// アニメーションの進捗
+    /// </summary>
+    [SerializeField]
     float m_StateTime;
+    [SerializeField]
     bool m_IsInSight;
 
     readonly int m_HashActionNum = Animator.StringToHash( "ActionNum" );
     readonly int m_HashDistNum = Animator.StringToHash( "DistNum" );
     readonly int m_HashAngleDiff = Animator.StringToHash( "AngleDiff" );
+    readonly int m_HashForwardSpeed = Animator.StringToHash( "ForwardSpeed" );
     readonly int m_HashIsInSight = Animator.StringToHash( "IsInSight" );
     readonly int m_HashDead = Animator.StringToHash( "Dead" );
     readonly int m_HashHit = Animator.StringToHash( "Hit" );
@@ -41,12 +60,11 @@ public class EnemyBehaviour : EnemyAttribut
     void Start()
     {
         anim = GetComponent<Animator>( );
+        enemyData = GetComponent<EnemyData>( );
         playerTrans = GameObject.FindGameObjectWithTag( "PlayerDirector" ).transform;
         targetDirector = GameObject.FindGameObjectWithTag( "EnemyDirector" ).transform;
 
-        currtHP = 100;
-        currtSTA = 100;
-        enemyState = EnemyState.Action;
+        state = State.Action;
     }
 
     /// <summary>
@@ -62,32 +80,38 @@ public class EnemyBehaviour : EnemyAttribut
     /// デッド状態・ヒット状態に遷移するかをチェックします。
     /// </summary>
     void CheckState() {
-        if (currtHP <= 0) {
-            currtHP = 0;
-            enemyState = EnemyState.Dead;
+        if ( enemyData.HP <= 0) {
+            state = State.Dead;
             return;
-        }else if(currtSTA <= 0) {
-            currtSTA = 0;
-            enemyState = EnemyState.Hit;
+        }else if( enemyData.STA <= 0) {
+            state = State.Hit;
             return;
         }
     }
 
+    /// <summary>
+    /// 距離を求めます
+    /// </summary>
     void CheckDistance() {
         distanceFromPlayer = Vector3.Distance( transform.position, playerTrans.position );
         if( distanceFromPlayer > longDist) {  //　長距離
+            anim.SetFloat( m_HashForwardSpeed, 1 );
             m_DistNum = 2;
         }else if(distanceFromPlayer > mediumDist) {　　//　中距離
+            anim.SetFloat( m_HashForwardSpeed, 1 );
             m_DistNum = 1;
         } else {  // 　短距離
+            anim.SetFloat( m_HashForwardSpeed, 0.25f );
             m_DistNum = 0;
         }
         distInfo = (Dist)m_DistNum;
-        anim.SetInteger( m_HashDistNum, m_DistNum );
-        print( distInfo );
 
+        anim.SetInteger( m_HashDistNum, m_DistNum );
     }
     
+    /// <summary>
+    /// プレイヤーが視界内に存在するかを判定します
+    /// </summary>
     void CalculateAngle() {
         float angleCurrent = Mathf.Atan2( transform.forward.x, transform.right.x ) * Mathf.Rad2Deg;
         float targetAngle = Mathf.Atan2( targetDirector.forward.x, targetDirector.right.x ) * Mathf.Rad2Deg;
@@ -99,14 +123,21 @@ public class EnemyBehaviour : EnemyAttribut
         anim.SetBool( m_HashIsInSight, m_IsInSight );
     }
 
+
+    /// <summary>
+    /// 歩く状態と攻撃ステートの最初10％の時間内は回転することができます
+    /// </summary>
     void EnemyTurning() {
-        if( (m_CurrentStateInfo.IsTag("Attack") && m_StateTime <= 0.2) || !m_CurrentStateInfo.IsTag( "Attack" ) ) {
+        if( (m_CurrentStateInfo.IsTag("Attack") && m_StateTime <= 0.25) || !m_CurrentStateInfo.IsTag( "Attack" ) ) {
             targetDirector.forward = playerTrans.position - transform.position;
             transform.rotation = Quaternion.RotateTowards( transform.rotation, targetDirector.rotation, rotationSpeed * Time.deltaTime );
         }
 
     }
 
+    /// <summary>
+    /// 距離により、次のアクションが決まります。
+    /// </summary>
     void ChooseAction() {
         if (m_CurrentStateInfo.IsTag( "Attack" ))
             return;
@@ -116,7 +147,7 @@ public class EnemyBehaviour : EnemyAttribut
                     m_ActionNum = Random.Range( 0, 4 );
                     break;
                 case Dist.MediumDist:
-                    m_ActionNum = Random.Range( 0, 3 );
+                    m_ActionNum = Random.Range( 0, 5 );
                     break;
                 case Dist.LongDist:
                     m_ActionNum = 0;
@@ -128,7 +159,7 @@ public class EnemyBehaviour : EnemyAttribut
                     m_ActionNum = Random.Range( 0, 4 );
                     break;
                 case Dist.MediumDist:
-                    m_ActionNum = Random.Range( 0, 2 );
+                    m_ActionNum = Random.Range( 0, 4 );
                     break;
                 case Dist.LongDist:
                     m_ActionNum = 0;
@@ -146,18 +177,17 @@ public class EnemyBehaviour : EnemyAttribut
         CalculateAngle( );
         CheckState( );
         EnemyTurning( );
-
-        switch (enemyState) {
-            case EnemyState.Dead:
+        switch (state) {
+            case State.Dead:
                 anim.SetTrigger( m_HashDead );
                 break;
-            case EnemyState.Hit:
+            case State.Hit:
                 anim.SetTrigger( m_HashHit );
                 break;
-            case EnemyState.Action:
+            case State.Action:
                 ChooseAction( );
                 break;
-            case EnemyState.Idle:
+            case State.Idle:
                 break;
         }
     }
