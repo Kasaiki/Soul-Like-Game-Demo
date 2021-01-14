@@ -16,6 +16,7 @@ public class PlayerWeaponManager : WeaponManager
         Vector3 hitPoint = target.ClosestPointOnBounds( location );
 
         var damageInterface = target.gameObject.GetComponent<IDamageEnable>( );
+        target.gameObject.GetComponent<HitStopEnable>( ).HitStop( );
         damageInterface.DoDamage( playerData.getATK );
     }
 

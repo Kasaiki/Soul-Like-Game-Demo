@@ -5,6 +5,7 @@ using UnityEngine;
 public class FSMClearSignal : StateMachineBehaviour
 {
     public string[] ClearAtEnter;
+    public string[] ClearAtUpdate;
     public string[] ClearAtExit;
 
     //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -15,10 +16,11 @@ public class FSMClearSignal : StateMachineBehaviour
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+        foreach (var signal in ClearAtEnter) {
+            animator.ResetTrigger( signal );
+        }
+    }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {

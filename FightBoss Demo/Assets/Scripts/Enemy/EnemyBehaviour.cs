@@ -28,7 +28,7 @@ public class EnemyBehaviour : EnemyAttribute
 
     // アニメーターインフォを用いて、アニメーションの状態を把握できます
     AnimatorStateInfo m_CurrentStateInfo;
-    AnimatorStateInfo m_LastStateInfo;
+    AnimatorStateInfo m_NextStateInfo;
 
     [SerializeField]
     int m_ActionNum;
@@ -58,6 +58,7 @@ public class EnemyBehaviour : EnemyAttribute
     readonly int m_HashDead = Animator.StringToHash( "Dead" );
     readonly int m_HashHit = Animator.StringToHash( "Hit" );
     readonly int m_HashStateTime = Animator.StringToHash( "StateTime" );
+    
 
     void Start()
     {
@@ -154,7 +155,7 @@ public class EnemyBehaviour : EnemyAttribute
     }
 
     void HitBehaviour() {
-        if (m_CurrentStateInfo.IsTag( "Hit" ) || m_LastStateInfo.IsTag("Hit")) {
+        if (m_CurrentStateInfo.IsTag( "Hit" ) || m_NextStateInfo.IsTag("Hit") ){
             state = State.Action;
             return;
         } else {
@@ -219,6 +220,5 @@ public class EnemyBehaviour : EnemyAttribute
             case State.Idle:
                 break;
         }
-        m_LastStateInfo = m_CurrentStateInfo;
     }
 }

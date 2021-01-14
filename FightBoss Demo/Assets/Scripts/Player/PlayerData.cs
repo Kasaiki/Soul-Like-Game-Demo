@@ -23,7 +23,7 @@ public class PlayerData : ActorAttribute
     /// </summary>
     /// <param name="value"></param>
     public override void DoDamage(float damage) {
-        print( "player is hit" );
+        //print( "player is hit" );
         HP = Mathf.Clamp( HP - damage, 0, MaxHP );
         BarUpdate( );
     }

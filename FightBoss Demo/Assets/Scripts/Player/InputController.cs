@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
+    #region パラメータ宣言
     // Variables
     [Header( "==== Mouse Setting ====" )]
     public bool mouseEnable = true;
@@ -50,6 +51,28 @@ public class InputController : MonoBehaviour
     public bool inputEnabled;
     public bool cameraLockOn;
 
+    public bool Dash {
+        get { return m_Dash && inputEnabled; }
+    }
+
+    public bool Attack {
+        get { return m_Attack && inputEnabled; }
+    }
+
+    public bool HeaveAttack {
+        get { return m_HeaveAttack && inputEnabled; }
+    }
+
+    public bool IsMove {
+        get { return m_isMove && inputEnabled; }
+    }
+
+    public bool IsRun {
+        get { return m_isRun && m_isMove && inputEnabled; }
+    }
+    #endregion
+
+    #region コルーチン宣言
     // coroutine define
     WaitForSeconds m_AttackInputWait;
     WaitForSeconds m_HeaveAttackInputWait;
@@ -59,7 +82,9 @@ public class InputController : MonoBehaviour
     Coroutine m_DashWaitCoroutine;
 
     const float InputWaitTime = 0.08f;
+    #endregion
 
+    #region 初期化
     private void Awake() {
         m_AttackInputWait = new WaitForSeconds( InputWaitTime );
         m_HeaveAttackInputWait = new WaitForSeconds( InputWaitTime );
@@ -75,27 +100,9 @@ public class InputController : MonoBehaviour
         cameraVerticalSignal = 0;
         cameraHorizontalSignal = 0;
     }
+    #endregion
 
-    public bool Dash {
-        get { return m_Dash && inputEnabled; }
-    }
-
-    public bool Attack {
-        get { return m_Attack && inputEnabled; }
-    }
-
-    public bool HeaveAttack {
-        get { return m_HeaveAttack  && inputEnabled; }
-    }
-
-    public bool IsMove {
-        get { return m_isMove && inputEnabled ; }
-    }
-
-    public bool IsRun {
-        get { return m_isRun && m_isMove && inputEnabled; }
-    }
-
+    #region コルーチン実現
     IEnumerator AttackWait() {
         m_Attack = true;
         yield return m_AttackInputWait;
@@ -113,6 +120,8 @@ public class InputController : MonoBehaviour
         yield return m_DashInputWait;
         m_Dash = false;
     }
+    #endregion
+
 
     private void DampMovementInput() {
         moveVerticalSignal = Mathf.SmoothDamp( moveVerticalSignal, targetDup, ref velocityDup, 0.1f );
@@ -152,7 +161,7 @@ public class InputController : MonoBehaviour
             //print( fixedMoveHorizontalSignal );
         }
 
-        /* control the signal by coroutine */
+        /* control the signals by coroutines */
         if (Input.GetButtonDown( "Fire1" )) { // Attack
             if (m_AttackWaitCoroutine != null)
                 StopCoroutine( m_AttackWaitCoroutine );
@@ -166,9 +175,9 @@ public class InputController : MonoBehaviour
         }
 
         if (Input.GetKeyDown( KeyCode.LeftShift )) { // HeaveAttack
-            if (m_HeaveAttackWaitCoroutine != null)
-                StopCoroutine( m_HeaveAttackWaitCoroutine );
-            m_HeaveAttackWaitCoroutine = StartCoroutine( DashWait( ) );
+            if (m_DashWaitCoroutine != null)
+                StopCoroutine( m_DashWaitCoroutine );
+            m_DashWaitCoroutine = StartCoroutine( DashWait( ) );
         }
 
         /* other input signals */

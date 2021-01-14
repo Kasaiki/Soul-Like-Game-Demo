@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\FSMScripts\FSMOnEnter.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMOnExit.cs" />
     <Compile Include="Assets\Scripts\FSMScripts\FSMOnUpdate.cs" />
+    <Compile Include="Assets\Scripts\Function\HitStopEnable.cs" />
     <Compile Include="Assets\Scripts\Function\Shakeable.cs" />
     <Compile Include="Assets\Scripts\Interface\IDamageEnable.cs" />
     <Compile Include="Assets\Scripts\Player\InputController.cs" />

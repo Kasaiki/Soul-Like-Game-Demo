@@ -880,6 +880,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &504314752 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7430727222208596578, guid: fec4f4b584dd0ee4cae0e58cdfb39bfc,
+    type: 3}
+  m_PrefabInstance: {fileID: 7430727220551732126}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &504314753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504314752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c3366d1d23797488107fc332a9059b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitStopTime: 0.02
 --- !u!1 &528920199 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8716205304530457740, guid: 2f47c9390938ecf47adf1c48bbb502d5,
@@ -914,6 +933,19 @@ MonoBehaviour:
   targetDirection: {x: 0, y: 0, z: 0}
   inputEnabled: 0
   cameraLockOn: 0
+--- !u!114 &528920204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528920199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c3366d1d23797488107fc332a9059b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitStopTime: 0.15
 --- !u!4 &528920205 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8716205304530457743, guid: 2f47c9390938ecf47adf1c48bbb502d5,
@@ -2469,6 +2501,11 @@ PrefabInstance:
       propertyPath: STABar
       value: 
       objectReference: {fileID: 119959408}
+    - target: {fileID: 7430727222208499062, guid: fec4f4b584dd0ee4cae0e58cdfb39bfc,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 7430727222208596578, guid: fec4f4b584dd0ee4cae0e58cdfb39bfc,
         type: 3}
       propertyPath: m_Name
@@ -2541,7 +2578,7 @@ PrefabInstance:
     - target: {fileID: 8716205304530457729, guid: 2f47c9390938ecf47adf1c48bbb502d5,
         type: 3}
       propertyPath: ATK
-      value: 500
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8716205304530457729, guid: 2f47c9390938ecf47adf1c48bbb502d5,
         type: 3}
