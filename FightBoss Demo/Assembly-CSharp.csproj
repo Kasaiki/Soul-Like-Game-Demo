@@ -90,6 +90,8 @@
     <Compile Include="Assets\Scripts\Weapon\EnemyWeaponManager.cs" />
     <Compile Include="Assets\Scripts\Weapon\PlayerWeaponManager.cs" />
     <Compile Include="Assets\Scripts\effect\BurnHelper.cs" />
+    <Compile Include="Assets\Scripts\effect\Interpolate.cs" />
+    <Compile Include="Assets\Scripts\effect\MeleeWeaponTrail.cs" />
     <None Include="Assets\shader\Chapter15-WaterWave.shader" />
     <None Include="Assets\KY_effects\MagicEffectsPackFree\ReadMe.txt" />
     <None Include="Assets\shader\Chapter15-Dissolve.shader" />
@@ -277,16 +279,16 @@
       <HintPath>D:/unity/2019.4.16f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/PackageCache/com.unity.ext.nunit@1.0.5/net35/unity-custom/nunit.framework.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/PackageCache/com.unity.ext.nunit@1.0.5/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:/unity/2019.4.16f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -634,46 +636,46 @@
       <HintPath>D:/unity/2019.4.16f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Cinemachine">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Editor">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.cinemachine.editor">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>E:/Soul-Like-Game-Demo/FightBoss Demo/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>E:/CODE/FightBoss Demo/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup></ItemGroup>
