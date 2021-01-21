@@ -30,6 +30,4 @@ public class EnemyWeaponManager : WeaponManager
         }
         lastWeaponEnable = weaponEnable;
     }
-
-    public bool WeaponEnable { get; set; }
 }

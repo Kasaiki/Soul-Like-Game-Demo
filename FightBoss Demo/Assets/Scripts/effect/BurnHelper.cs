@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BurnHelper : EnemyBehaviour{
+public class BurnHelper : MonoBehaviour{
 
 	public Material material;
 
