@@ -7,5 +7,5 @@ using UnityEngine;
 /// </summary>
 public interface IDamageEnable
 {
-    void DoDamage(float damage);
+    void DoDamage(float damage , Vector3 hitPosition);
 }

@@ -31,14 +31,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float maxRotateSpeed = 1080f;
     [SerializeField]
-    private float minRotateSpeed = 120f;
+    private float minRotateSpeed = 90f;
 
     // Animator parameters Hash 
     readonly int m_HashForwardSpeed = Animator.StringToHash( "ForwardSpeed" );
     readonly int m_HashGrounded = Animator.StringToHash( "Grounded" );
     readonly int m_HashAttack = Animator.StringToHash( "Attack" );
     readonly int m_HashHeaveAttack = Animator.StringToHash( "HeaveAttack" );
-    readonly int m_HashHurt = Animator.StringToHash( "Hurt" );
+    readonly int m_HashHit = Animator.StringToHash( "Hit" );
     readonly int m_HashDeath = Animator.StringToHash( "Death" );
     readonly int m_HashIsMove = Animator.StringToHash( "IsMove" );
     readonly int m_HashDash = Animator.StringToHash( "Dash" );
@@ -99,12 +99,23 @@ public class PlayerController : MonoBehaviour
         rig.velocity = Vector3.zero;
     }
 
+    void FaceToDirect( Vector3 faceToDir ) {
+        transform.forward = faceToDir;
+    }
+
     void ChangeRotationSpeed() {
-        if (m_CurrentStateInfo.IsTag( "Attacking" )) {
+        if (m_CurrentStateInfo.IsTag( "Attacking" ) || m_CurrentStateInfo.IsTag("Hit")) {
             currentRotateSpeed = minRotateSpeed;
         } else {
             currentRotateSpeed = maxRotateSpeed;
         }
+    }
+
+    public void SetHit(Vector3 hitPosition) {
+        if (!m_CurrentStateInfo.IsTag( "Hit" ))
+            m_Animator.SetTrigger( m_HashHit );
+        hitPosition = new Vector3( hitPosition.x, 0, hitPosition.z );
+        FaceToDirect( hitPosition - transform.position );
     }
 
     void SetDash() {
@@ -133,6 +144,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void SetDead() {
+        m_Animator.SetTrigger( m_HashDeath );
+    }
+
     void ResetAllTriggers() {
         m_Animator.ResetTrigger( m_HashAttack );
         m_Animator.ResetTrigger( m_HashDash );
@@ -144,8 +159,14 @@ public class PlayerController : MonoBehaviour
         m_Animator.SetFloat( m_HashStateTime, Mathf.Repeat( m_CurrentStateInfo.normalizedTime, 1f ) );
     }
 
+    
+
     void FixedUpdate()
     {
+        if (playerData.isDead) {
+            rig.velocity = Vector3.zero;
+            return;
+        }
 
         CacheAnimatorState( );
         ChangeRotationSpeed( );
@@ -158,6 +179,7 @@ public class PlayerController : MonoBehaviour
 
         TurningCharacter( );
         MoveCharacter( );
+
 
         m_LastStateInfo = m_CurrentStateInfo;
     }

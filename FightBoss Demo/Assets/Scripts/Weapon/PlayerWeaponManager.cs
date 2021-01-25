@@ -17,7 +17,7 @@ public class PlayerWeaponManager : WeaponManager
 
         var damageInterface = target.gameObject.GetComponent<IDamageEnable>( );
         target.gameObject.GetComponent<HitStopEnable>( ).HitStop( );
-        damageInterface.DoDamage( playerData.getATK );
+        damageInterface.DoDamage( playerData.getATK , hitPoint );
     }
 
     private void LateUpdate() {

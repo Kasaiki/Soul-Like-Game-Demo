@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-abstract public class ActorAttribute : MonoBehaviour , IDamageEnable
+abstract public class ActorAttribute : MonoBehaviour, IDamageEnable
 {
     #region 属性
     [SerializeField]
@@ -78,9 +78,13 @@ abstract public class ActorAttribute : MonoBehaviour , IDamageEnable
         HPBar.value = HP;
         STABar.value = STA;
     }
-    #endregion 
-
-    #region インターフェース
-    public abstract void DoDamage(float damage);
     #endregion
+
+    /// <summary>
+    /// ヒット時の処理
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <param name="hitPosition"></param>
+    public abstract void DoDamage(float damage, Vector3 hitPosition);
+
 }

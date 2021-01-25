@@ -1273,7 +1273,7 @@ MonoBehaviour:
   canAttack: 0
   currentRotateSpeed: 1080
   maxRotateSpeed: 1080
-  minRotateSpeed: 120
+  minRotateSpeed: 90
 --- !u!114 &873152412 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8504511500668613809, guid: 2f47c9390938ecf47adf1c48bbb502d5,
@@ -2763,17 +2763,17 @@ PrefabInstance:
     - target: {fileID: 7430727222208894848, guid: fec4f4b584dd0ee4cae0e58cdfb39bfc,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.4
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 7430727222208894848, guid: fec4f4b584dd0ee4cae0e58cdfb39bfc,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.4
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 7430727222208894848, guid: fec4f4b584dd0ee4cae0e58cdfb39bfc,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.4
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 7430727222208894848, guid: fec4f4b584dd0ee4cae0e58cdfb39bfc,
         type: 3}
@@ -2834,6 +2834,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8716205303578151955, guid: 2f47c9390938ecf47adf1c48bbb502d5,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c9175eeabc559fb4683d692ffbc33ae0, type: 2}
     - target: {fileID: 8716205304530457729, guid: 2f47c9390938ecf47adf1c48bbb502d5,
         type: 3}
       propertyPath: ATK
@@ -2849,6 +2854,11 @@ PrefabInstance:
       propertyPath: STABar
       value: 
       objectReference: {fileID: 904570898}
+    - target: {fileID: 8716205304530457730, guid: 2f47c9390938ecf47adf1c48bbb502d5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8716205304530457731, guid: 2f47c9390938ecf47adf1c48bbb502d5,
         type: 3}
       propertyPath: m_IsKinematic

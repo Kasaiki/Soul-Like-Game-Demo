@@ -22,8 +22,8 @@ public class EnemyData : ActorAttribute
     /// 敵のダメージ処理
     /// </summary>
     /// <param name="damage"></param>
-    public override void DoDamage(float damage) {
-        print( "Enemy is hit" );
+    public override void DoDamage(float damage, Vector3 hitPosition) {
+        
         HP = Mathf.Clamp( HP - damage/2, 0, MaxHP );
         STA = Mathf.Clamp( STA - damage/5, 0, MaxSTA );
         BarUpdate( );

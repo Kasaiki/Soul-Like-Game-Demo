@@ -5,7 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    private EnemyData enemyData;
+    [SerializeField]
+    private PlayerData playerData;
 
+    //　シングルトン
     private static GameManager gm;
     public static GameManager getGM {
         get { return gm; }

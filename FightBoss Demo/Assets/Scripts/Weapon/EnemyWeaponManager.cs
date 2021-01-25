@@ -17,7 +17,7 @@ public class EnemyWeaponManager : WeaponManager
 
         var damageInterface = target.gameObject.GetComponent<IDamageEnable>( );
         target.gameObject.GetComponent<HitStopEnable>( ).HitStop( );
-        damageInterface.DoDamage( enemyData.getATK );
+        damageInterface.DoDamage( enemyData.getATK , transform.position );
 
         //Debug.Log( hitPoint );
     }

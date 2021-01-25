@@ -113,12 +113,12 @@ public class MeleeWeaponTrail : MonoBehaviour
 
 	void Update()
 	{
+		// effect
 		if (weaponManager.weaponEnable == false)
 			_emit = false;
 		else
 			_emit = true;
-		print(weaponManager.weaponEnable);
-		/////////////////////////////////////////LI
+		//////////////////////////////LI
 
 		if (!_use)
 		{
