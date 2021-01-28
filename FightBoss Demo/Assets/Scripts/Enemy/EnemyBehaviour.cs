@@ -43,7 +43,7 @@ public class EnemyBehaviour : EnemyAttribute
     [SerializeField]
     float m_AngleDiff;
     /// <summary>
-    /// アニメーションの進捗
+    /// アニメーションの再生状況
     /// </summary>
     [SerializeField]
     float m_StateTime;
