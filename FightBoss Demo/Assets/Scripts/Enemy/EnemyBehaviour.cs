@@ -20,7 +20,7 @@ public class EnemyBehaviour : EnemyAttribute
     [SerializeField]
     private float distanceFromPlayer;
     [SerializeField]
-    private float longDist = 10f;
+    private float longDist = 8f;
     [SerializeField]
     private float mediumDist = 4f;
     [SerializeField]

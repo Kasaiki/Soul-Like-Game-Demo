@@ -16,19 +16,22 @@ public class PlayerData : ActorAttribute
     }
 
 
-    public override void DoDamage(float damage , Vector3 hitPosition) {
+    public override void DoDamage(float damage , Vector3 hitPoint) {
         if (isDead)
             return;
 
-        HP = Mathf.Clamp( HP - damage, 0, MaxHP );
-        if (HP <= 0) {
+        if ( !pc.CheckInvincible( )) {
+            PoolManager.GetObject( "skillAttack", hitPoint );
+            HP = Mathf.Clamp( HP - damage, 0, MaxHP );
+            if (HP <= 0) {
+                BarUpdate( );
+                isDead = true;
+                pc.SetDead( );
+                return;
+            }
+            pc.SetHit( hitPoint );
             BarUpdate( );
-            isDead = true;
-            pc.SetDead( );
-            return;
         }
 
-        pc.SetHit( hitPosition );
-        BarUpdate( );
     }
 }

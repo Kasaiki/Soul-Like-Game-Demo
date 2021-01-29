@@ -159,7 +159,12 @@ public class PlayerController : MonoBehaviour
         m_Animator.SetFloat( m_HashStateTime, Mathf.Repeat( m_CurrentStateInfo.normalizedTime, 1f ) );
     }
 
-    
+    public bool CheckInvincible() {
+        if (m_CurrentStateInfo.IsTag( "Hit" ) || m_CurrentStateInfo.IsTag( "Dodge" ) || m_CurrentStateInfo.IsTag( "Dead" ))
+            return true;
+        else
+            return false;
+    }
 
     void FixedUpdate()
     {
@@ -167,7 +172,6 @@ public class PlayerController : MonoBehaviour
             rig.velocity = Vector3.zero;
             return;
         }
-
         CacheAnimatorState( );
         ChangeRotationSpeed( );
 
