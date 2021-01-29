@@ -44,7 +44,7 @@ public class EnemyMeleeWeaponTrail : MonoBehaviour
 	[SerializeField]
 	float _minVertexDistance = 0.1f;
 	[SerializeField]
-	float _maxVertexDistance = 10.0f;
+	float _maxVertexDistance = 13.0f;
 
 	float _minVertexDistanceSqr = 0.0f;
 	float _maxVertexDistanceSqr = 0.0f;

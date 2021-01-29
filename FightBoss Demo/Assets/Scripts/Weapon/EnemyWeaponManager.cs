@@ -15,6 +15,7 @@ public class EnemyWeaponManager : WeaponManager
         Vector3 location = this.transform.position;
         Vector3 hitPoint = target.ClosestPointOnBounds( location );
 
+        PoolManager.GetObject( "skillAttack2", hitPoint );
         var damageInterface = target.gameObject.GetComponent<IDamageEnable>( );
         target.gameObject.GetComponent<HitStopEnable>( ).HitStop( );
         damageInterface.DoDamage( enemyData.getATK , transform.position );
