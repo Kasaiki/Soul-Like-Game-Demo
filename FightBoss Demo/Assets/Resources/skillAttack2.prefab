@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 400002}
   - component: {fileID: 19800000}
   - component: {fileID: 19900000}
-  - component: {fileID: -3860891605006984136}
+  - component: {fileID: -493705591056919898}
   m_Layer: 0
   m_Name: skillAttack2
   m_TagString: Untagged
@@ -4880,7 +4880,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &-3860891605006984136
+--- !u!114 &-493705591056919898
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4892,7 +4892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc8b0f481d9e0f24ca5b6b701998aff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayTime: 1
+  delayTime: 0.5
 --- !u!1 &100004
 GameObject:
   m_ObjectHideFlags: 0
@@ -4910,7 +4910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &400004
 Transform:
   m_ObjectHideFlags: 0

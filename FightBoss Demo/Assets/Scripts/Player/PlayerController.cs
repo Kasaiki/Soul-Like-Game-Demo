@@ -49,8 +49,8 @@ public class PlayerController : MonoBehaviour
     readonly int m_State_Move = Animator.StringToHash( "Move" );
 
     //　Animator state info
-    protected AnimatorStateInfo m_CurrentStateInfo;
-    protected AnimatorStateInfo m_LastStateInfo;
+    public AnimatorStateInfo m_CurrentStateInfo;
+    public AnimatorStateInfo m_LastStateInfo;
     protected float m_AngleDifferent;
 
     void Start()
@@ -119,8 +119,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void SetDash() {
+        if (playerData.STA < 40)
+            return;
         if (m_CurrentStateInfo.IsName( "Dash" )) {
-            if(ic.Dash && m_Animator.GetFloat(m_HashStateTime) > 0.6) {
+            if(ic.Dash && m_Animator.GetFloat(m_HashStateTime) > 0.4) {
                 m_Animator.SetTrigger( m_HashDash );
             }
             float velocity = m_Animator.GetFloat( m_Curve_DashVelocity );

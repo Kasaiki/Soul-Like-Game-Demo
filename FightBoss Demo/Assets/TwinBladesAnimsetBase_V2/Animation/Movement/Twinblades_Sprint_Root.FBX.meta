@@ -502,7 +502,17 @@ ModelImporter:
       warnings that might lower retargeting quality:\nNote: Activate translation
       DOF on avatar to improve retargeting quality.\n\t'spine_01' has translation
       animation that will be discarded.\n"
-    animationRetargetingWarnings: 
+    animationRetargetingWarnings: "\nRetargeting quality report for clip 'Twinblades_Sprint_Root':\n\tLeftUpperArm
+      average position error 14.8 mm and maximum position error 18.4 mm at time 10:35
+      (9.4%) Frame 635\n\tLeftLowerArm average position error 14.8 mm and maximum
+      position error 18.4 mm at time 10:35 (9.4%) Frame 635\n\tLeftHand average position
+      error 14.8 mm and maximum position error 18.4 mm at time 10:35 (9.4%) Frame
+      635\n\tRightUpperArm average position error 14.8 mm and maximum position error
+      18.4 mm at time 10:35 (9.4%) Frame 635\n\tRightLowerArm average position error
+      14.7 mm and maximum position error 18.5 mm at time 10:35 (9.4%) Frame 635\n\tRightHand
+      average position error 14.8 mm and maximum position error 18.4 mm at time 10:35
+      (9.4%) Frame 635\n\tHead average position error 14.8 mm and maximum position
+      error 18.4 mm at time 10:35 (9.4%) Frame 635\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
     importConstraints: 0
@@ -538,7 +548,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.4191617
+        functionName: PlayFootstepAudio
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.92814356
+        functionName: PlayFootstepAudio
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

@@ -503,7 +503,18 @@ ModelImporter:
       DOF on avatar to improve retargeting quality.\n\t'spine_01' has translation
       animation that will be discarded.\n\t'spine_02' has translation animation that
       will be discarded.\n"
-    animationRetargetingWarnings: 
+    animationRetargetingWarnings: "\nRetargeting quality report for clip 'GreatSword_Whirlwind_Loop_Root':\n\tLeftLowerLeg
+      average position error 0.4 mm and maximum position error 7.6 mm at time 0:34
+      (85.0%) Frame 34\n\tLeftUpperArm average position error 2.9 mm and maximum
+      position error 7.9 mm at time 0:35 (87.5%) Frame 35\n\tLeftLowerArm average
+      position error 3.0 mm and maximum position error 7.9 mm at time 0:35 (87.5%)
+      Frame 35\n\tLeftHand average position error 2.9 mm and maximum position error
+      7.9 mm at time 0:35 (87.5%) Frame 35\n\tRightUpperArm average position error
+      2.9 mm and maximum position error 7.9 mm at time 0:35 (87.5%) Frame 35\n\tRightLowerArm
+      average position error 2.9 mm and maximum position error 7.7 mm at time 0:35
+      (87.5%) Frame 35\n\tRightHand average position error 2.9 mm and maximum position
+      error 7.9 mm at time 0:35 (87.5%) Frame 35\n\tHead average position error 2.9
+      mm and maximum position error 7.9 mm at time 0:35 (87.5%) Frame 35\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
     importConstraints: 0
@@ -539,7 +550,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: PlaySwordwooshAudio
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

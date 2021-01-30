@@ -5,12 +5,14 @@ using UnityEngine;
 public class FSMMessageReceiver : MonoBehaviour
 {
     private PlayerController pc;
+    private PlayerData pd;
     private Animator anim;
 
     private int temp;
 
     private void Start() {
         pc = GetComponentInParent<PlayerController>( );
+        pd = GetComponentInParent<PlayerData>( );
         anim = GetComponent<Animator>( );
     }
 
@@ -21,5 +23,9 @@ public class FSMMessageReceiver : MonoBehaviour
 
     void OnEnterHit() {
         anim.ResetTrigger( "Hit" );
+    }
+
+    void OnEnterDash() {
+        pd.EnterDash( );
     }
 }

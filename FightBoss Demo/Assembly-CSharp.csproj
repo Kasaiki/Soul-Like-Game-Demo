@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Assets\KY_effects\Script\ConGUI.cs" />
     <Compile Include="Assets\KY_effects\Script\Lighting.cs" />
+    <Compile Include="Assets\Scripts\Audio\AudioPlayer.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\Scripts\Camera\LockOnTargetDetector.cs" />
     <Compile Include="Assets\Scripts\Common\ActorAttribute.cs" />

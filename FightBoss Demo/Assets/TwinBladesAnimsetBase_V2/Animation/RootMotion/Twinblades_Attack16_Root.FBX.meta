@@ -510,7 +510,18 @@ ModelImporter:
       animation that will be discarded.\n\t'spine_02' has translation animation that
       will be discarded.\n\t'spine_03' has translation animation that will be discarded.\n\t'neck_01'
       has translation animation that will be discarded.\n"
-    animationRetargetingWarnings: 
+    animationRetargetingWarnings: "\nRetargeting quality report for clip 'Twinblades_Attack16_Root':\n\tLeftLowerLeg
+      average position error 0.2 mm and maximum position error 2.4 mm at time 1:109
+      (62.9%) Frame 229\n\tLeftUpperArm average position error 11.9 mm and maximum
+      position error 12.0 mm at time 0:43 (11.8%) Frame 43\n\tLeftLowerArm average
+      position error 12.0 mm and maximum position error 12.2 mm at time 1:68 (51.6%)
+      Frame 188\n\tLeftHand average position error 11.9 mm and maximum position error
+      12.0 mm at time 1:111 (63.5%) Frame 231\n\tRightUpperArm average position error
+      11.9 mm and maximum position error 12.0 mm at time 0:43 (11.8%) Frame 43\n\tRightLowerArm
+      average position error 12.0 mm and maximum position error 12.1 mm at time 1:79
+      (54.7%) Frame 199\n\tRightHand average position error 11.9 mm and maximum position
+      error 12.0 mm at time 1:116 (64.8%) Frame 236\n\tHead average position error
+      11.9 mm and maximum position error 12.0 mm at time 0:50 (13.7%) Frame 50\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
     importConstraints: 0
@@ -554,8 +565,64 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.053892218
+        functionName: PlaySwordwooshAudio
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.11497868
+        functionName: PlaySwordwooshAudio
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.14608194
+        functionName: PlaySwordwooshAudio
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.20958084
+        functionName: PlaySwordwooshAudio
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.23369561
-        functionName: EndAttackEvent
+        functionName: PlaySwordwooshAudio
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.1736527
+        functionName: PlaySwordwooshAudio
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.065868266
+        functionName: PlayFootstepAudio
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.13772455
+        functionName: PlayFootstepAudio
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.19760479
+        functionName: PlayFootstepAudio
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

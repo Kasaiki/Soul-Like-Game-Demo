@@ -24,6 +24,7 @@ public class EnemyData : ActorAttribute
     /// <param name="damage"></param>
     public override void DoDamage(float damage, Vector3 hitPoint) {
         if (HP <= 0)
+            
             return;
         PoolManager.GetObject( "skillAttack2", hitPoint );
         HP = Mathf.Clamp( HP - damage/2, 0, MaxHP );
