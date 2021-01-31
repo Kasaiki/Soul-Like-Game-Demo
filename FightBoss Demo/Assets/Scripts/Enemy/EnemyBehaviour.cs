@@ -167,12 +167,14 @@ public class EnemyBehaviour : EnemyAttribute
     /// 距離により、次のアクションが決まります。
     /// </summary>
     void ChooseAction() {
+        int last_ActionNum = m_ActionNum;
         if (m_CurrentStateInfo.IsTag( "Attack" ))
             return;
         if ( m_IsInSight ) {
             switch (distInfo) {
                 case Dist.ShortDist:
-                    m_ActionNum = Random.Range( 0, 4 );
+                    m_ActionNum = Random.Range( 0, 5 );
+                    //m_ActionNum = 4;
                     break;
                 case Dist.MediumDist:
                     m_ActionNum = Random.Range( 0, 5 );
@@ -221,4 +223,7 @@ public class EnemyBehaviour : EnemyAttribute
                 break;
         }
     }
+
+
+
 }

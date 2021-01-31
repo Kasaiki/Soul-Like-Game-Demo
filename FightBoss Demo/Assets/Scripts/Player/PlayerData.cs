@@ -29,7 +29,6 @@ public class PlayerData : ActorAttribute
     private void Update() {
         StaminaUpdate( );
         BarUpdate( );
-        print( pc.m_Animator );
     }
 
     public override void DoDamage(float damage , Vector3 hitPoint) {
@@ -37,7 +36,7 @@ public class PlayerData : ActorAttribute
             return;
 
         if ( !pc.CheckInvincible( )) {
-            PoolManager.GetObject( "skillAttack", hitPoint );
+            PoolManager.GetObject( "skillAttack", hitPoint , Quaternion.Euler(transform.forward));
             HP = Mathf.Clamp( HP - damage, 0, MaxHP );
             if (HP <= 0) {
                 isDead = true;

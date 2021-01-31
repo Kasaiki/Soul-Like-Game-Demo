@@ -23,9 +23,4 @@ abstract public class EnemyAttribute : MonoBehaviour
         MediumDist,
         LongDist,
     }
-
-    public void EnemyIsHitted() {
-
-
-    }
 }

@@ -566,9 +566,23 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.19453771
+        functionName: PlayEffect
+        data: Eff1_Down
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.24117646
         functionName: EndAttackEvent
         data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.24271846
+        functionName: PlaySkillEffect
+        data: Eff1_Crack
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

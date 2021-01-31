@@ -554,13 +554,6 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.3705882
-        functionName: EndAttackEvent
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
       - time: 0.107784435
         functionName: PlaySwordwooshAudio
         data: 
@@ -568,8 +561,22 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.11070111
+        functionName: PlayEffect
+        data: Eff7_Slash
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.251497
         functionName: PlaySwordwooshAudio
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.3705882
+        functionName: EndAttackEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

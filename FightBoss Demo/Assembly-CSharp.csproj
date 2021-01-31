@@ -66,6 +66,16 @@
   <ItemGroup>
     <Compile Include="Assets\KY_effects\Script\ConGUI.cs" />
     <Compile Include="Assets\KY_effects\Script\Lighting.cs" />
+    <Compile Include="Assets\OrdosFX\Magic Slashes FX\MobileBloom\Slashes_MobileBloom.cs" />
+    <Compile Include="Assets\OrdosFX\Magic Slashes FX\SceneResources\Other\Slash_DemoGUI.cs" />
+    <Compile Include="Assets\OrdosFX\Magic Slashes FX\SceneResources\Other\Slash_MouseOrbit.cs" />
+    <Compile Include="Assets\OrdosFX\Magic Slashes FX\Scripts\AnimationEventEffects.cs" />
+    <Compile Include="Assets\OrdosFX\Magic Slashes FX\Scripts\Slash_AxisRotateByTime.cs" />
+    <Compile Include="Assets\OrdosFX\Magic Slashes FX\Scripts\Slash_GrvityPoint.cs" />
+    <Compile Include="Assets\OrdosFX\Magic Slashes FX\Scripts\Slash_Light.cs" />
+    <Compile Include="Assets\OrdosFX\Magic Slashes FX\Scripts\Slash_UIEffectList.cs" />
+    <Compile Include="Assets\OrdosFX\Magic Slashes FX\Scripts\Slash_WroomWroom.cs" />
+    <Compile Include="Assets\OrdosFX\Magic Slashes FX\Scripts\Teleport.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioPlayer.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\Scripts\Camera\LockOnTargetDetector.cs" />
@@ -73,6 +83,7 @@
     <Compile Include="Assets\Scripts\Common\WeaponManager.cs" />
     <Compile Include="Assets\Scripts\Effect\BurnHelper.cs" />
     <Compile Include="Assets\Scripts\Effect\DelayPushBack.cs" />
+    <Compile Include="Assets\Scripts\Effect\EnemyEffectPlayer.cs" />
     <Compile Include="Assets\Scripts\Effect\EnemyMeleeWeaponTrail.cs" />
     <Compile Include="Assets\Scripts\Effect\Interpolate.cs" />
     <Compile Include="Assets\Scripts\Effect\PlayerMeleeWeaponTraill.cs" />
@@ -96,9 +107,16 @@
     <Compile Include="Assets\Scripts\System\SceneControl.cs" />
     <Compile Include="Assets\Scripts\Weapon\EnemyWeaponManager.cs" />
     <Compile Include="Assets\Scripts\Weapon\PlayerWeaponManager.cs" />
+    <None Include="Assets\OrdosFX\Magic Slashes FX\MobileBloom\Resources\Slashes_Bloom.shader" />
     <None Include="Assets\shader\Chapter15-WaterWave.shader" />
     <None Include="Assets\KY_effects\MagicEffectsPackFree\ReadMe.txt" />
+    <None Include="Assets\OrdosFX\Magic Slashes FX\MobileBloom\Resources\Slashes_Bloom_Inc.cginc" />
     <None Include="Assets\shader\Chapter15-Dissolve.shader" />
+    <None Include="Assets\OrdosFX\Magic Slashes FX\Shaders\Slash_AnimBlended.shader" />
+    <None Include="Assets\OrdosFX\Magic Slashes FX\Shaders\SlashBird.shader" />
+    <None Include="Assets\OrdosFX\Magic Slashes FX\Shaders\SlashShader.shader" />
+    <None Include="Assets\OrdosFX\Magic Slashes FX\SceneResources\Other\CullOffMobileDiffuse.shader" />
+    <None Include="Assets\OrdosFX\Magic Slashes FX\Shaders\SlashParticles.shader" />
     <Reference Include="UnityEngine">
       <HintPath>D:/Unity/2019.4.16f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

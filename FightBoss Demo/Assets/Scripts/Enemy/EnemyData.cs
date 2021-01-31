@@ -26,7 +26,7 @@ public class EnemyData : ActorAttribute
         if (HP <= 0)
             
             return;
-        PoolManager.GetObject( "skillAttack2", hitPoint );
+        PoolManager.GetObject( "skillAttack2", hitPoint , Quaternion.Euler(transform.forward) );
         HP = Mathf.Clamp( HP - damage/2, 0, MaxHP );
         STA = Mathf.Clamp( STA - damage/5, 0, MaxSTA );
         BarUpdate( );
